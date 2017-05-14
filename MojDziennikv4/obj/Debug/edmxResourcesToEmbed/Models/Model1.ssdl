@@ -1,0 +1,411 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MojDziennikModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Account">
+    <Key>
+      <PropertyRef Name="Account_Id" />
+    </Key>
+    <Property Name="Account_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Login" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="30" />
+    <Property Name="Account_Type" Type="varchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Class_Room">
+    <Key>
+      <PropertyRef Name="Class_Room_Number" />
+    </Key>
+    <Property Name="Class_Room_Number" Type="varchar" MaxLength="6" Nullable="false" />
+    <Property Name="Employee_Id" Type="int" />
+    <Property Name="Size" Type="int" />
+    <Property Name="Subject_Id" Type="int" />
+    <Property Name="Equipment_Description" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="Employee">
+    <Key>
+      <PropertyRef Name="Employee_Id" />
+    </Key>
+    <Property Name="Employee_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="First_Name" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Middle_Name" Type="varchar" MaxLength="20" />
+    <Property Name="Surname" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Pesel_Number" Type="varchar" MaxLength="11" Nullable="false" />
+    <Property Name="Telefon_Number" Type="varchar" MaxLength="15" />
+    <Property Name="Account_Id" Type="int" Nullable="false" />
+    <Property Name="Hire_Date" Type="date" />
+    <Property Name="Birth_Date" Type="date" />
+    <Property Name="Adress" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Event">
+    <Key>
+      <PropertyRef Name="Event_Id" />
+    </Key>
+    <Property Name="Event_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Employee_Id" Type="int" />
+    <Property Name="Start_Time" Type="date" />
+    <Property Name="Duration_In_Days" Type="int" />
+    <Property Name="Describe" Type="varchar" MaxLength="500" />
+    <Property Name="Account_Group" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Legal_Guardian">
+    <Key>
+      <PropertyRef Name="Legal_Guardian_Id" />
+    </Key>
+    <Property Name="Legal_Guardian_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="First_Name" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Middle_Name" Type="varchar" MaxLength="20" />
+    <Property Name="Surname" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Telefon_Number" Type="varchar" MaxLength="15" />
+    <Property Name="Account_Id" Type="int" Nullable="false" />
+    <Property Name="Adress" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Lesson">
+    <Key>
+      <PropertyRef Name="Lesson_Id" />
+    </Key>
+    <Property Name="Lesson_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Class_Number" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="Subject_Id" Type="int" Nullable="false" />
+    <Property Name="Employee_Id" Type="int" Nullable="false" />
+    <Property Name="Day_Of_Week" Type="int" Nullable="false" />
+    <Property Name="Start_Time" Type="varchar" MaxLength="5" Nullable="false" />
+    <Property Name="Class_Room_Number" Type="varchar" MaxLength="6" />
+  </EntityType>
+  <EntityType Name="Mark">
+    <Key>
+      <PropertyRef Name="Mark_Id" />
+    </Key>
+    <Property Name="Mark_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Value" Type="int" Nullable="false" />
+    <Property Name="Weight" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Pupil_Id" Type="int" Nullable="false" />
+    <Property Name="Employee_Id" Type="int" Nullable="false" />
+    <Property Name="Subject_Id" Type="int" Nullable="false" />
+    <Property Name="Describe" Type="varchar" MaxLength="50" />
+    <Property Name="Mark_Date" Type="date" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Note">
+    <Key>
+      <PropertyRef Name="Note_Id" />
+    </Key>
+    <Property Name="Note_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Pupil_Id" Type="int" Nullable="false" />
+    <Property Name="Employee_Id" Type="int" Nullable="false" />
+    <Property Name="Note_Date" Type="date" Nullable="false" />
+    <Property Name="Positve" Type="bit" Nullable="false" />
+    <Property Name="Describe" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Pupil">
+    <Key>
+      <PropertyRef Name="Pupil_Id" />
+    </Key>
+    <Property Name="Pupil_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="First_Name" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Middle_Name" Type="varchar" MaxLength="20" />
+    <Property Name="Surname" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Pesel_Number" Type="varchar" MaxLength="11" Nullable="false" />
+    <Property Name="Legal_Guardian_Id" Type="int" Nullable="false" />
+    <Property Name="Birth_Date" Type="date" Nullable="false" />
+    <Property Name="School_Id_Card_Number" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="Account_Id" Type="int" Nullable="false" />
+    <Property Name="Class_Number" Type="varchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="School_Class">
+    <Key>
+      <PropertyRef Name="Class_Number" />
+    </Key>
+    <Property Name="Class_Number" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="Profile" Type="varchar" MaxLength="40" />
+    <Property Name="Employee_Id" Type="int" />
+  </EntityType>
+  <EntityType Name="Subject">
+    <Key>
+      <PropertyRef Name="Subject_Id" />
+    </Key>
+    <Property Name="Subject_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Subject_Name" Type="varchar" MaxLength="30" />
+  </EntityType>
+  <Association Name="FK_Event_Employee">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+    <End Role="Event" Type="Self.Event" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="Employee_Id" />
+      </Principal>
+      <Dependent Role="Event">
+        <PropertyRef Name="Employee_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Klasa_Pracownik">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+    <End Role="School_Class" Type="Self.School_Class" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="Employee_Id" />
+      </Principal>
+      <Dependent Role="School_Class">
+        <PropertyRef Name="Employee_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Lekcja_Klasa">
+    <End Role="School_Class" Type="Self.School_Class" Multiplicity="1" />
+    <End Role="Lesson" Type="Self.Lesson" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="School_Class">
+        <PropertyRef Name="Class_Number" />
+      </Principal>
+      <Dependent Role="Lesson">
+        <PropertyRef Name="Class_Number" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Lekcja_Pracownik">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+    <End Role="Lesson" Type="Self.Lesson" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="Employee_Id" />
+      </Principal>
+      <Dependent Role="Lesson">
+        <PropertyRef Name="Employee_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Lekcja_Sala">
+    <End Role="Class_Room" Type="Self.Class_Room" Multiplicity="0..1" />
+    <End Role="Lesson" Type="Self.Lesson" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Class_Room">
+        <PropertyRef Name="Class_Room_Number" />
+      </Principal>
+      <Dependent Role="Lesson">
+        <PropertyRef Name="Class_Room_Number" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Lesson_Subject">
+    <End Role="Subject" Type="Self.Subject" Multiplicity="1" />
+    <End Role="Lesson" Type="Self.Lesson" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Subject">
+        <PropertyRef Name="Subject_Id" />
+      </Principal>
+      <Dependent Role="Lesson">
+        <PropertyRef Name="Subject_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Mark_Subject">
+    <End Role="Subject" Type="Self.Subject" Multiplicity="1" />
+    <End Role="Mark" Type="Self.Mark" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Subject">
+        <PropertyRef Name="Subject_Id" />
+      </Principal>
+      <Dependent Role="Mark">
+        <PropertyRef Name="Subject_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Ocena_Pracownik">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+    <End Role="Mark" Type="Self.Mark" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="Employee_Id" />
+      </Principal>
+      <Dependent Role="Mark">
+        <PropertyRef Name="Employee_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Ocena_Uczen">
+    <End Role="Pupil" Type="Self.Pupil" Multiplicity="1" />
+    <End Role="Mark" Type="Self.Mark" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Pupil">
+        <PropertyRef Name="Pupil_Id" />
+      </Principal>
+      <Dependent Role="Mark">
+        <PropertyRef Name="Pupil_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Opiekun_Konto">
+    <End Role="Account" Type="Self.Account" Multiplicity="1" />
+    <End Role="Legal_Guardian" Type="Self.Legal_Guardian" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Account">
+        <PropertyRef Name="Account_Id" />
+      </Principal>
+      <Dependent Role="Legal_Guardian">
+        <PropertyRef Name="Account_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Pracownik_Konto">
+    <End Role="Account" Type="Self.Account" Multiplicity="1" />
+    <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Account">
+        <PropertyRef Name="Account_Id" />
+      </Principal>
+      <Dependent Role="Employee">
+        <PropertyRef Name="Account_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Sala_Pracownik">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+    <End Role="Class_Room" Type="Self.Class_Room" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="Employee_Id" />
+      </Principal>
+      <Dependent Role="Class_Room">
+        <PropertyRef Name="Employee_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Uczen_Klasa">
+    <End Role="School_Class" Type="Self.School_Class" Multiplicity="0..1" />
+    <End Role="Pupil" Type="Self.Pupil" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="School_Class">
+        <PropertyRef Name="Class_Number" />
+      </Principal>
+      <Dependent Role="Pupil">
+        <PropertyRef Name="Class_Number" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Uczen_Konto">
+    <End Role="Account" Type="Self.Account" Multiplicity="1" />
+    <End Role="Pupil" Type="Self.Pupil" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Account">
+        <PropertyRef Name="Account_Id" />
+      </Principal>
+      <Dependent Role="Pupil">
+        <PropertyRef Name="Account_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Uczen_Opiekun">
+    <End Role="Legal_Guardian" Type="Self.Legal_Guardian" Multiplicity="1" />
+    <End Role="Pupil" Type="Self.Pupil" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Legal_Guardian">
+        <PropertyRef Name="Legal_Guardian_Id" />
+      </Principal>
+      <Dependent Role="Pupil">
+        <PropertyRef Name="Legal_Guardian_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Uwagi_Pracownik">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+    <End Role="Note" Type="Self.Note" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="Employee_Id" />
+      </Principal>
+      <Dependent Role="Note">
+        <PropertyRef Name="Employee_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Uwagi_Uczen">
+    <End Role="Pupil" Type="Self.Pupil" Multiplicity="1" />
+    <End Role="Note" Type="Self.Note" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Pupil">
+        <PropertyRef Name="Pupil_Id" />
+      </Principal>
+      <Dependent Role="Note">
+        <PropertyRef Name="Pupil_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="MojDziennikModelStoreContainer">
+    <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Class_Room" EntityType="Self.Class_Room" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Event" EntityType="Self.Event" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Legal_Guardian" EntityType="Self.Legal_Guardian" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Lesson" EntityType="Self.Lesson" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Mark" EntityType="Self.Mark" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Note" EntityType="Self.Note" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Pupil" EntityType="Self.Pupil" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="School_Class" EntityType="Self.School_Class" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Subject" EntityType="Self.Subject" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Event_Employee" Association="Self.FK_Event_Employee">
+      <End Role="Employee" EntitySet="Employee" />
+      <End Role="Event" EntitySet="Event" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Klasa_Pracownik" Association="Self.FK_Klasa_Pracownik">
+      <End Role="Employee" EntitySet="Employee" />
+      <End Role="School_Class" EntitySet="School_Class" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Lekcja_Klasa" Association="Self.FK_Lekcja_Klasa">
+      <End Role="School_Class" EntitySet="School_Class" />
+      <End Role="Lesson" EntitySet="Lesson" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Lekcja_Pracownik" Association="Self.FK_Lekcja_Pracownik">
+      <End Role="Employee" EntitySet="Employee" />
+      <End Role="Lesson" EntitySet="Lesson" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Lekcja_Sala" Association="Self.FK_Lekcja_Sala">
+      <End Role="Class_Room" EntitySet="Class_Room" />
+      <End Role="Lesson" EntitySet="Lesson" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Lesson_Subject" Association="Self.FK_Lesson_Subject">
+      <End Role="Subject" EntitySet="Subject" />
+      <End Role="Lesson" EntitySet="Lesson" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Mark_Subject" Association="Self.FK_Mark_Subject">
+      <End Role="Subject" EntitySet="Subject" />
+      <End Role="Mark" EntitySet="Mark" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Ocena_Pracownik" Association="Self.FK_Ocena_Pracownik">
+      <End Role="Employee" EntitySet="Employee" />
+      <End Role="Mark" EntitySet="Mark" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Ocena_Uczen" Association="Self.FK_Ocena_Uczen">
+      <End Role="Pupil" EntitySet="Pupil" />
+      <End Role="Mark" EntitySet="Mark" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Opiekun_Konto" Association="Self.FK_Opiekun_Konto">
+      <End Role="Account" EntitySet="Account" />
+      <End Role="Legal_Guardian" EntitySet="Legal_Guardian" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Pracownik_Konto" Association="Self.FK_Pracownik_Konto">
+      <End Role="Account" EntitySet="Account" />
+      <End Role="Employee" EntitySet="Employee" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Sala_Pracownik" Association="Self.FK_Sala_Pracownik">
+      <End Role="Employee" EntitySet="Employee" />
+      <End Role="Class_Room" EntitySet="Class_Room" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Uczen_Klasa" Association="Self.FK_Uczen_Klasa">
+      <End Role="School_Class" EntitySet="School_Class" />
+      <End Role="Pupil" EntitySet="Pupil" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Uczen_Konto" Association="Self.FK_Uczen_Konto">
+      <End Role="Account" EntitySet="Account" />
+      <End Role="Pupil" EntitySet="Pupil" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Uczen_Opiekun" Association="Self.FK_Uczen_Opiekun">
+      <End Role="Legal_Guardian" EntitySet="Legal_Guardian" />
+      <End Role="Pupil" EntitySet="Pupil" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Uwagi_Pracownik" Association="Self.FK_Uwagi_Pracownik">
+      <End Role="Employee" EntitySet="Employee" />
+      <End Role="Note" EntitySet="Note" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Uwagi_Uczen" Association="Self.FK_Uwagi_Uczen">
+      <End Role="Pupil" EntitySet="Pupil" />
+      <End Role="Note" EntitySet="Note" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,20 @@
+﻿@using Microsoft.AspNet.Identity
+@using MojDziennikv4.Models.DAL
+@using MojDziennikv4.Models
+@model MojDziennikv4.Models.IPerson
+@if (Request.IsAuthenticated)
+{
+    
+    @Html.AntiForgeryToken()
+        {
+            MojDziennikEntities db = new MojDziennikEntities();
+            var account = db.Account.ToList();
+        }
+    <ul class="nav navbar-nav navbar-right">
+        <li>
+            @Html.ActionLink(Model.First_Name, "Index", "Login", routeValues: null, htmlAttributes: new { title = "Login" })
+        </li>
+    </ul>
+    
+}
+

@@ -1,0 +1,66 @@
+﻿@model IEnumerable<MojDziennikv4.Models.Event>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Start_Time)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Duration_In_Days)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Describe)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Account_Group)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Employee.First_Name)
+            </th>
+            <th></th>
+        </tr>
+    
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Start_Time)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Duration_In_Days)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Describe)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Account_Group)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Employee.First_Name)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.Event_Id }) |
+                @Html.ActionLink("Details", "Details", new { id=item.Event_Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.Event_Id })
+            </td>
+        </tr>
+    }
+    
+    </table>
+</body>
+</html>

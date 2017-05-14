@@ -1,0 +1,22 @@
+﻿@model List<MojDziennikv4.Models.Pupil>
+@if(Model.Count==0)
+{
+    <p>klasa nie ma uczniów</p>
+}
+<table>
+    <tr>
+        <td>Imie i nazwisko</td>
+        <td>Pesel</td>
+        <td>Data urodzenia</td>
+        <td>Numer Legitymacji</td>
+    </tr>
+    @foreach (var pupil in Model)
+    {
+        <tr>
+            <td>@pupil.First_Name @pupil.Surname</td>
+            <td>@pupil.Pesel_Number</td>
+            <td>@pupil.Birth_Date</td>
+            <td>@pupil.School_Id_Card_Number</td>
+        </tr>
+    }
+</table>

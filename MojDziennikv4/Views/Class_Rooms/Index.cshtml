@@ -1,0 +1,52 @@
+﻿@model IEnumerable<MojDziennikv4.Models.Class_Room>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Size)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Subject_Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Equipment_Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Employee.First_Name)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Size)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Subject_Id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Equipment_Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Employee.First_Name)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Class_Room_Number }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Class_Room_Number }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Class_Room_Number })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,19 @@
+﻿@model MojDziennikv4.Models.Pupil
+@{
+    ViewBag.Title = "Notes";
+    Layout = "~/Views/Shared/_PupilLayout.cshtml";
+}
+
+<h2>Uwagi</h2>
+@for (int i = @Model.Note.ToList().Count - 1; i >= 0; i--)
+            {
+                int y = 1;
+    <p>
+        @if (@Model.Note.ToList().ElementAt(i).Positve)
+                { <div>pozytywna @Model.Note.ToList().ElementAt(i).Describe</div>}
+                else { <div>negatywna @Model.Note.ToList().ElementAt(i).Describe</div> }
+    </p>
+    if (y == 3)
+    { break; }
+    y++;
+}

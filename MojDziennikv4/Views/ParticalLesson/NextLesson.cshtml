@@ -1,0 +1,8 @@
+﻿@using MojDziennikv4.Models
+@model Lesson
+
+    <p>Następna lekcja</p>
+    <p>Sala: @Model.Class_Room.Class_Room_Number</p>
+    <p>Nauczyciel: @Model.Employee.Surname</p>
+    <p>Początek: @Model.Start_Time</p>
+    <p>Przedmiot: @Model.Subject.Subject_Name</p>

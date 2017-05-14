@@ -1,0 +1,30 @@
+﻿@using MojDziennikv4.Models;
+@model Dictionary<String, List<Mark>>
+@{
+    ViewBag.Title = "Marks";
+    Layout = "~/Views/Shared/_PupilLayout.cshtml";
+    int i = 0;
+}
+
+<h2>Marks</h2>
+<table border="1">
+    @foreach (String val in Model.Keys)
+    {
+        <tr>
+            <td>@val</td>
+            
+            @foreach (Mark mark in Model[val])
+            {
+            <td>@mark.Value</td>
+            i += 1;
+            }
+            @for (; i < 8; i++)
+            {
+                
+                <td></td>
+            }
+        </tr>
+        i = 0;
+    }
+</table>
+

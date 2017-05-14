@@ -1,0 +1,65 @@
+﻿@model MojDziennikv4.Models.Note
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Note</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Note_Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Note_Date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Positve)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Positve)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Describe)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Describe)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Employee.First_Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Employee.First_Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Pupil.First_Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Pupil.First_Name)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

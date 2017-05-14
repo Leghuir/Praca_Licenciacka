@@ -1,0 +1,70 @@
+﻿@using MojDziennikv4.Models.DAL
+@model IEnumerable<MojDziennikv4.Models.Account>
+
+@{
+    Layout = null;
+    bool udane = true;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    @Styles.Render("~/Content/css")
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    @{ 
+        
+            int i = PersonAccount.checkpasses(ViewBag.hlp.db, ViewBag.hlp.Login, ViewBag.hlp.Password, ViewBag.hlp.Type);
+            switch (i)
+            {
+                case 3:
+    <meta http-equiv="Refresh" content="0; url=/Home/Index" />; ViewBag.hlp.Type = "Unknow"; PersonAccount.getInstance().IsAuthenticated = true;  break;
+            case 2:
+    <meta http-equiv="Refresh" content="0; url=/Home/AsPupil" />; ViewBag.hlp.Type = "Unknow"; PersonAccount.getInstance().IsAuthenticated = true; break;
+            case 1:
+    <meta http-equiv="Refresh" content="0; url=/Home/AsTeacher" />; ViewBag.hlp.Type = "Unknow"; PersonAccount.getInstance().IsAuthenticated = true; break;
+
+        }
+
+        if (ViewBag.hlp.Type != "Unknow")
+        {
+            udane = false;
+        }
+
+        }
+</head>
+<body>
+
+    <div id='panellog'>
+        @if (!udane)
+        {
+            <h4>Podano błędne dane</h4>
+        }
+        <form action="~/Login/Index" method=post>
+            Login
+            <br>
+            <input type=text name=frm_login>
+            <br>
+            Haslo
+            <br><input type=password name=frm_password>
+            <br>
+            Typ konta
+            <br>
+            <select name="sel_type">
+                <option value=@MojDziennikv4.Models.AccountType.Administrator>@MojDziennikv4.Models.AccountType.Administrator</option>
+                <option value=@MojDziennikv4.Models.AccountType.Dyrektor>@MojDziennikv4.Models.AccountType.Dyrektor</option>
+                <option value=@MojDziennikv4.Models.AccountType.Nauczyciel>@MojDziennikv4.Models.AccountType.Nauczyciel</option>
+                <option value=@MojDziennikv4.Models.AccountType.Opiekun>@MojDziennikv4.Models.AccountType.Opiekun</option>
+                <option value=@MojDziennikv4.Models.AccountType.Sekretariat>@MojDziennikv4.Models.AccountType.Sekretariat</option>
+                <option value=@MojDziennikv4.Models.AccountType.Uczen>@MojDziennikv4.Models.AccountType.Uczen</option>
+            </select>
+
+
+            <br>
+            <input type=submit value='Zaloguj się'>
+        </form>
+    </div>
+
+</body>
+</html>

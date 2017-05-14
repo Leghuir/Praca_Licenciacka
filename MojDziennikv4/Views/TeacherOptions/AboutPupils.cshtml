@@ -1,0 +1,21 @@
+﻿@using MojDziennikv4.Models;
+@model MojDziennikv4.Models.Pupil
+@{
+    ViewBag.Title = "AboutPupils";
+    Layout = "~/Views/Shared/_TeacherLayout.cshtml";
+}
+<h2>AboutPupils</h2>
+<select id="myDropDown">
+    <option> </option>
+    @foreach(School_Class classes in ViewBag.Class_Name)
+    {
+        <option>@classes.Class_Number</option>
+    }
+</select>
+
+<div id="partialPlaceHolder" style="display:none;">@Html.Action("Index", "ParticalPupilInClass") </div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+@Scripts.Render("~/Scripts/Classchenger.js");
+}

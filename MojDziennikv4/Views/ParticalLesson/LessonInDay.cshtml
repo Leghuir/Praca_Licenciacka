@@ -1,0 +1,7 @@
+﻿@using MojDziennikv4.Models
+@model ICollection<Lesson>
+
+@foreach(var lesson in Model)
+{
+    <p>@lesson.Subject.Subject_Name</p>
+}

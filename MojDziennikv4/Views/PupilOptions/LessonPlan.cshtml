@@ -1,0 +1,9 @@
+﻿@model MojDziennikv4.Models.Pupil
+@{
+    ViewBag.Title = "LessonPlan";
+    Layout = "~/Views/Shared/_PupilLayout.cshtml";
+    String lessonPlan= @"/Content/Images/"+Model.Class_Number+".jpg";
+}
+
+<h2>Plan Lekcji</h2>
+<img src="@lessonPlan" />

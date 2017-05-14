@@ -1,0 +1,10 @@
+﻿@model MojDziennikv4.Models.Lesson
+
+@if(Model==null)
+{
+    <p> w najbliższym czasie nie ma żadnej lekcji</p>
+}
+else
+{
+    <p>@Model.Class_Number @Model.Start_Time @Model.Subject.Subject_Name @Model.Class_Room.Class_Room_Number</p>
+}

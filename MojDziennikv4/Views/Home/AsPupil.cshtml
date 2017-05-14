@@ -1,0 +1,114 @@
+﻿@using MojDziennikv4.Controllers
+@model MojDziennikv4.Models.Pupil
+@{
+    ViewBag.Title = "Pupil";
+    Layout = "~/Views/Shared/_PupilLayout.cshtml";
+}
+
+<div class="container" id='maingridpane'>
+    <div class="row" id="rowgridpane">
+        <div class="col-sm-4 col-md-4 col-lg-4">
+            <div id="personaldata">
+                @{
+                    String[] PupilDetails = new string[7];
+                    PupilDetails[0] = "Imie " + Model.First_Name + Environment.NewLine;
+                    PupilDetails[1] = "Drugie imie " + Model.Middle_Name + Environment.NewLine;
+                    PupilDetails[2] = "Nazwisko " + Model.Surname + Environment.NewLine;
+                    PupilDetails[3] = "Pesel " + Model.Pesel_Number + Environment.NewLine;
+                    PupilDetails[4] = "Data urodzenia " + Model.Birth_Date.ToString() + Environment.NewLine;
+                    PupilDetails[5] = "Numer legitymacji " + Model.School_Id_Card_Number + Environment.NewLine;
+                    PupilDetails[6] = "Klasa " + Model.Class_Number + Environment.NewLine;
+
+                }
+                <img src="/Content/Images/pupilicon.jpg" class="img-rounded" width="100" height="100" />
+                @foreach (string s in PupilDetails)
+                {
+                    <p>@s</p>
+                }
+            </div>
+        </div>
+        <div class="col-sm-4 col-md-4 col-lg-4" id="calendar">
+            <script type="text/javascript">
+                calendar();
+            </script>
+        </div>
+        <div class="col-sm-4 col-md-4 col-lg-4" id="zegarek">Zegarek</div>
+
+    </div>
+    <div class="row" id="rowgridpane">
+
+        <div class="col-sm-4 col-md-4 col-lg-4" id="Wydarzenia">
+            <h2>Wydarzenia</h2>
+            @Html.Action("Index", "ParticalEvents")
+        </div>
+        <div class="col-sm-4 col-md-4 col-lg-4" id="planlekcji">
+            <h2>Plan Lekcji</h2>
+            @Html.Action("LessonInDay", "ParticalLesson")
+        </div>
+        <div class="col-sm-4 col-md-4 col-lg-4" id="BieżącaLekcja">
+            <h2>Bieżąca lekcja</h2>
+            @Html.Action("CurrentLesson", "ParticalLesson")
+            <hr/>
+            @Html.Action("NextLesson", "ParticalLesson")
+        </div>
+
+    </div>
+    <div class="row" id="rowgridpane">
+
+        <div class="col-sm-4 col-md-4 col-lg-4" id="Średniazbieżącejlekcji">
+            <h3>Średnia z bieżącej lekcji</h3>
+            @{
+                float weightSum1 = 0f;
+                float sumOfMarkMultipleByWeight1 = 0f;
+                float srednia1=0f;
+                if (ParticalLessonController.currentLessonName != "")
+                {
+                    foreach (var mark in Model.Mark.Where(a => a.Subject.Subject_Name.Equals(ParticalLessonController.currentLessonName)).ToList())
+                    {
+                        weightSum1 += (float)mark.Weight;
+                        sumOfMarkMultipleByWeight1 += (float)mark.Weight * mark.Value;
+                    }
+                    srednia1 = (sumOfMarkMultipleByWeight1 / weightSum1);
+                }
+            }
+            @if(srednia1!=0f)
+            { 
+            <h2>@srednia1.ToString("0.00")</h2>
+            }
+            else
+            {
+                <h2>aktualnie nie ma lekcji albo nie masz jeszcze z niego ocen</h2>
+            }
+        </div>
+        <div class="col-sm-4 col-md-4 col-lg-4" id="uwagi">
+            <h2>Uwagi</h2>
+            @for (int i = @Model.Note.ToList().Count - 1; i >= 0; i--)
+            {
+                int y = 1;
+                <p>
+                    @if (@Model.Note.ToList().ElementAt(i).Positve)
+                { <div>pozytywna @Model.Note.ToList().ElementAt(i).Describe</div>}
+                else { <div>negatywna @Model.Note.ToList().ElementAt(i).Describe</div> }
+                </p>
+                if (y == 3)
+                { break; }
+                y++;
+            }
+        </div>
+        <div class="col-sm-4 col-md-4 col-lg-4" id="Średniaważonanarok">
+            <h2>Średnia ważona na rok</h2>
+            @{
+                float weightSum = 0f;
+                float sumOfMarkMultipleByWeight = 0f;
+                foreach (var mark in Model.Mark.ToList())
+                {
+                    weightSum += (float)mark.Weight;
+                    sumOfMarkMultipleByWeight += (float)mark.Weight * mark.Value;
+                }
+                float srednia = (sumOfMarkMultipleByWeight / weightSum);
+            }
+            <h2>@srednia.ToString("0.00")</h2>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,6 @@
+﻿@using MojDziennikv4.Models;
+@model List<Lesson>
+@foreach (var lesson in Model)
+{
+    <p> @(lesson.Start_Time + " " + lesson.Subject.Subject_Name + " " + lesson.School_Class.Class_Number)</p>
+}

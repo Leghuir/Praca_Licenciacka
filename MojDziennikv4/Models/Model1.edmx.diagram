@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="850341368c014fa1898b45b932b83821" Name="Diagram1">
+        <EntityTypeShape EntityType="MojDziennikModel.Account" Width="1.5" PointX="0.75" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="MojDziennikModel.Class_Room" Width="1.5" PointX="5.25" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MojDziennikModel.Employee" Width="1.5" PointX="3" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MojDziennikModel.Legal_Guardian" Width="1.5" PointX="3" PointY="13" IsExpanded="true" />
+        <EntityTypeShape EntityType="MojDziennikModel.Lesson" Width="1.5" PointX="7.5" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MojDziennikModel.Mark" Width="1.5" PointX="9.75" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="MojDziennikModel.Note" Width="1.5" PointX="12.75" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="MojDziennikModel.Pupil" Width="1.5" PointX="7.5" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="MojDziennikModel.School_Class" Width="1.5" PointX="5.25" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="MojDziennikModel.Subject" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="MojDziennikModel.Event" Width="1.5" PointX="5.25" PointY="9.875" IsExpanded="true" />
+        <AssociationConnector Association="MojDziennikModel.FK_Opiekun_Konto" ManuallyRouted="false" />
+        <AssociationConnector Association="MojDziennikModel.FK_Pracownik_Konto" ManuallyRouted="false" />
+        <AssociationConnector Association="MojDziennikModel.FK_Uczen_Konto" ManuallyRouted="false" />
+        <AssociationConnector Association="MojDziennikModel.FK_Lekcja_Sala" ManuallyRouted="false" />
+        <AssociationConnector Association="MojDziennikModel.FK_Sala_Pracownik" ManuallyRouted="false" />
+        <AssociationConnector Association="MojDziennikModel.FK_Event_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="MojDziennikModel.FK_Klasa_Pracownik" ManuallyRouted="false" />
+        <AssociationConnector Association="MojDziennikModel.FK_Lekcja_Pracownik" ManuallyRouted="false" />
+        <AssociationConnector Association="MojDziennikModel.FK_Ocena_Pracownik" ManuallyRouted="false" />
+        <AssociationConnector Association="MojDziennikModel.FK_Uwagi_Pracownik" ManuallyRouted="false" />
+        <AssociationConnector Association="MojDziennikModel.FK_Uczen_Opiekun" ManuallyRouted="false" />
+        <AssociationConnector Association="MojDziennikModel.FK_Lekcja_Klasa" ManuallyRouted="false" />
+        <AssociationConnector Association="MojDziennikModel.FK_Lesson_Subject" ManuallyRouted="false" />
+        <AssociationConnector Association="MojDziennikModel.FK_Mark_Subject" ManuallyRouted="false" />
+        <AssociationConnector Association="MojDziennikModel.FK_Ocena_Uczen" ManuallyRouted="false" />
+        <AssociationConnector Association="MojDziennikModel.FK_Uwagi_Uczen" ManuallyRouted="false" />
+        <AssociationConnector Association="MojDziennikModel.FK_Uczen_Klasa" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,31 @@
+﻿@{
+    ViewBag.Title = "Panel Nauczyciela";
+    Layout = "~/Views/Shared/_TeacherLayout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6">
+        Plan Lekcji
+            @Html.Action("TeacherLessonInDay", "ParticalLesson")
+        </div>
+        <div class="col-lg-6">
+            Wydarzenia
+            @Html.Action("TeacherEvents", "ParticalEvents")
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            Następna lekcja
+        @Html.Action("TeacherNextLesson", "ParticalLesson")
+        </div>
+        <div class="col-lg-6">Kalendarz
+            <script type="text/javascript">
+                calendar();
+            </script>
+        </div>
+    </div>
+
+</div>
+
+<p>Use this area to provide additional information.</p>

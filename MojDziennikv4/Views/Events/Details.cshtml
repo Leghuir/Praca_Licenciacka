@@ -1,0 +1,67 @@
+﻿@model MojDziennikv4.Models.Event
+
+@{
+     ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <h4>Event</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Start_Time)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Start_Time)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Duration_In_Days)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Duration_In_Days)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Describe)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Describe)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Account_Group)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Account_Group)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Employee.First_Name)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Employee.First_Name)
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Event_Id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>
