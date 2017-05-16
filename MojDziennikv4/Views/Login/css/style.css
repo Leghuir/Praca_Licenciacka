@@ -1,5 +1,3 @@
-@font-face { font-family: 'Raleway'; src: url('../../../fonts/Raleway/Raleway-Regular.ttf'); }
-
 body {
  background: #81a2be;
  font-family: Raleway;
@@ -11,12 +9,9 @@ body {
  position: absolute;
  top: 50%;
  left: 50%;
- -webkit-transform: translate(-50%, -50%);
-         transform: translate(-50%, -50%);
+ transform: translate(-50%, -50%);
  width: 500px;
  height: 180px;
- display: -webkit-box;
- display: -ms-flexbox;
  display: flex;
 }
 
@@ -76,9 +71,30 @@ input[type=text],
 input[type=password] {
  width: 250px;
  text-align: center;
+ border-radius: 5px;
+ outline: none;
 }
 
 input[type=submit] {
  width: 100px;
  cursor: pointer;
+ border-radius: 5px;
+ outline: none;
+}
+
+.error {
+ width: 250px;
+ height: 30px;
+ position: absolute;
+ top: 0;
+ left: 50%;
+ transform: translate(-50%, 0);
+ background: red;
+ text-align: center;
+ line-height: 30px;
+ color: black;
+ font-weight: bold;
+ border-top-left-radius: 10px;
+ border-top-right-radius: 10px;
+ box-shadow: 0 5px 5px 0px rgba(82, 82, 82, 0.75);
 }
