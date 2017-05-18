@@ -14,10 +14,11 @@ namespace MojDziennikv4.Controllers
 {
     public class LoginController : Controller
     {
-        private MojDziennikEntities db = new MojDziennikEntities();
+
 
         // GET: Login
 
+        private MojDziennikEntities db = new MojDziennikEntities();
         public ActionResult Index(String frm_login, String frm_password, String sel_type)
         {
             Thread.CurrentPrincipal = PersonAccount.getInstance();

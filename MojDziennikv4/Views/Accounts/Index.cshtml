@@ -1,14 +1,14 @@
 ﻿@model IEnumerable<MojDziennikv4.Models.Account>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Konta";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Konta użytkowników</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Stwórz nowe konto", "Create")
 </p>
 <table class="table">
     <tr>
@@ -36,9 +36,8 @@
             @Html.DisplayFor(modelItem => item.Account_Type)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Account_Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Account_Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Account_Id })
+            @Html.ActionLink("Edytuj", "Edit", new { id=item.Account_Id }) |
+            @Html.ActionLink("Usuń", "Delete", new { id=item.Account_Id })
         </td>
     </tr>
 }
