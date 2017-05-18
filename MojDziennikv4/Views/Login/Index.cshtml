@@ -1,4 +1,4 @@
-﻿@using MojDziennikv4.Models.DAL
+@using MojDziennikv4.Models.DAL
 @model IEnumerable<MojDziennikv4.Models.Account>
 
 @{
@@ -13,6 +13,7 @@
     @Styles.Render("~/Content/login")
     <meta name="viewport" content="width=device-width" />
     <title>Index</title>
+	<link rel="stylesheet" href="css/style.css">
     @{ 
         
             int i = PersonAccount.checkpasses(ViewBag.hlp.db, ViewBag.hlp.Login, ViewBag.hlp.Password, ViewBag.hlp.Type);
@@ -35,41 +36,40 @@
         }
 </head>
 <body>
- 
-    <div class='selection'>
-        <div class='left'>
-            <p class="option" id="dyrektor">Dyrektor</p>
-            <p class="option" id="sekretariat">Sekretariat</p>
-            <p class="option selected" id="administrator">Administrator</p>
-        </div>
-        <div id="panellog">
-            <p class='message'>Logujesz się jako: Administrator</p>
-            <form action="/Login/Index" method="post">
-                <p><input name="frm_login" type="text" placeholder="Login"></p>
-                <p><input name="frm_password" type="password" placeholder="Hasło"></p>
-                <select name="sel_type" hidden>
-                    <option id='administrator' value="Administrator" selected="selected">Administrator</option>
-                    <option id='dyrektor' value="Dyrektor">Dyrektor</option>
-                    <option id='nauczyciel' value="Nauczyciel">Nauczyciel</option>
-                    <option id='opiekun' value="Opiekun">Opiekun</option>
-                    <option id='sekretariat' value="Sekretariat">Sekretariat</option>
-                    <option id='uczen' value="Uczen">Uczeń</option>
-                </select>
-                <input value="Zaloguj się" type="submit">
-            </form>
-        </div>
-        <div class='right'>
-            <p class="option" id="uczen">Uczeń</p>
-            <p class="option" id="nauczyciel">Nauczyciel</p>
-            <p class="option" id="opiekun">Opiekun</p>
-        </div>
-        <p class="error">Podano błędne dane logowania</p>
-    </div>
+	<div class='selection'>
+	<div class='left'>
+		<p class="option" id="dyrektor">Dyrektor</p>
+		<p class="option" id="sekretariat">Sekretariat</p>
+		<p class="option selected" id="administrator">Administrator</p>
+	</div>
+   	 <div id='panellog'>
+		<p class='message'>Logujesz się jako: Administrator</p>
+		<form action="~/Login/Index" method=post>
+			<p><input name="frm_login" type="text" placeholder="Login"></p>
+			<p><input name="frm_password" type="password" placeholder="Hasło"></p>
+			<select name="sel_type" hidden>
+				<option id='administrator' value=@MojDziennikv4.Models.AccountType.Administrator>@MojDziennikv4.Models.AccountType.Administrator</option>
+				<option id='dyrektor' value=@MojDziennikv4.Models.AccountType.Dyrektor>@MojDziennikv4.Models.AccountType.Dyrektor</option>
+				<option id='nauczyciel' value=@MojDziennikv4.Models.AccountType.Nauczyciel>@MojDziennikv4.Models.AccountType.Nauczyciel</option>
+				<option id='opiekun' value=@MojDziennikv4.Models.AccountType.Opiekun>@MojDziennikv4.Models.AccountType.Opiekun</option>
+				<option id='sekretariat' value=@MojDziennikv4.Models.AccountType.Sekretariat>@MojDziennikv4.Models.AccountType.Sekretariat</option>
+				<option id='uczen' value=@MojDziennikv4.Models.AccountType.Uczen>@MojDziennikv4.Models.AccountType.Uczen</option>
+			</select>
+			<input value="Zaloguj się" type="submit">
+		</form>
+	</div>
+	<div class='right'>
+		<p class="option" id="uczen">Uczeń</p>
+		<p class="option" id="nauczyciel">Nauczyciel</p>
+		<p class="option" id="opiekun">Opiekun</p>
+	</div>
+	<p class="error">Podano błędne dane logowania</p>
+</div>
 
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
+<script src='js/jquery.min.js'></script>
+<script src="js/index.js"></script>
 
-    @if (!udane)
-    {
+@if (!udane){
         <script type="text/javascript">
             $(".error").stop().animate(
                 {
@@ -77,37 +77,14 @@
                 },
                 "fast"
             );
-            $(".error").delay(8000).animate(
+            $(".error").delay(1500).animate(
                 {
                     top: "0px"
                 },
                 "fast"
             );
         </script>
-    }
-    <script type="text/javascript">
- $(".errortest").click(function() {
-  $(".error").stop().animate(
-   {
-    top: "-40px"
-   },
-   "fast"
-  );
-  $(".error").delay(1500).animate(
-   {
-    top: "0px"
-   },
-   "fast"
-  );
- });
- $(".option").click(function () {
-     $(".option").removeClass("selected");
-     $(this).addClass("selected");
-     $(".message").text("Logujesz się jako: " + $(this).text());
-     $("option").removeAttr("selected", "selected");
-     $("option#" + $(this).attr("id") + "").attr("selected", "selected");
- });
-    </script>
+}
 
 </body>
 </html>
