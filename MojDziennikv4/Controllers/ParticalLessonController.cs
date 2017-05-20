@@ -113,5 +113,13 @@ namespace MojDziennikv4.Controllers
             }
             return start_hour.ToString() + ':' + start_minutes.ToString();
         }
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }

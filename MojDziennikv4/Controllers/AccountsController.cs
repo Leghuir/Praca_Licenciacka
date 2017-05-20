@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
+using System.Linq.Dynamic;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MojDziennikv4.Models;
+using MojDziennikv4.Models.DAL;
+using System.Web.ModelBinding;
 
 namespace MojDziennikv4.Controllers
 {
@@ -15,9 +18,10 @@ namespace MojDziennikv4.Controllers
         private MojDziennikEntities db = new MojDziennikEntities();
 
         // GET: Accounts
-        public ActionResult Index()
+        public ActionResult Index([Form] QueryOptions queryOptions)
         {
-            return View(db.Account.ToList());
+            ViewBag.QueryOptions = queryOptions;
+            return View(db.Account.OrderBy(queryOptions.Sort).ToList());
         }
 
         // GET: Accounts/Details/5
@@ -50,6 +54,7 @@ namespace MojDziennikv4.Controllers
         {
             if (ModelState.IsValid)
             {
+                LogManager.SaveLog("create"+ account.ToString() +','+ DateTime.Now.Ticks+','+ PersonAccount.getInstance().accountId);
                 db.Account.Add(account);
                 db.SaveChanges();
                 return RedirectToAction("Index");

@@ -16,7 +16,7 @@ namespace MojDziennikv4.Controllers
         {
             ViewBag.userName = "Administrator";
             ViewBag.hlp = null;
-            return View();
+            return View(LogManager.GetAllLogs());
         }
 
         public ActionResult AsPupil()
@@ -38,15 +38,19 @@ namespace MojDziennikv4.Controllers
         }
         public static IPerson GetPerson()
         {
-            MojDziennikEntities db = new MojDziennikEntities();
-            switch (PersonAccount.getInstance().AuthenticationType)
+            using (MojDziennikEntities db = new MojDziennikEntities())
             {
-                case "Nauczyciel": return GetEmployeeFromAccountId(db, PersonAccount.getInstance().accountId);
-                case "Uczen": return GetPupilFromAccountId(db, PersonAccount.getInstance().accountId);
-                case "Opiekun": return GetLegal_GuardianFromAccountId(db, PersonAccount.getInstance().accountId);
-                default: return GetEmployeeFromAccountId(db, PersonAccount.getInstance().accountId);
+                switch (PersonAccount.getInstance().AuthenticationType)
+                {
+                    case "Nauczyciel": return GetEmployeeFromAccountId(db, PersonAccount.getInstance().accountId);
+                    case "Uczen": return GetPupilFromAccountId(db, PersonAccount.getInstance().accountId);
+                    case "Opiekun": return GetLegal_GuardianFromAccountId(db, PersonAccount.getInstance().accountId);
+                    default: return GetEmployeeFromAccountId(db, PersonAccount.getInstance().accountId);
+                }
             }
         }
+
+        //to usunąć przy czyszczeniu i zastąpić tym z modelu
         public static Employee GetEmployeeFromAccountId(MojDziennikEntities db,int accountid)
         {
             var account = db.Account.ToList().Where(a => a.Account_Id == accountid);

@@ -19,6 +19,7 @@ namespace MojDziennikv4.Controllers
         // GET: Login
 
         private MojDziennikEntities db = new MojDziennikEntities();
+        [HttpPost]
         public ActionResult Index(String frm_login, String frm_password, String sel_type)
         {
             Thread.CurrentPrincipal = PersonAccount.getInstance();
@@ -28,6 +29,24 @@ namespace MojDziennikv4.Controllers
             }
             ViewBag.hlp = new LoginHelper(db.Account.ToList(), frm_password, frm_login, sel_type);
             return View(db.Account.ToList());
+        }
+        public ActionResult Index(String message)
+        {
+            if(message=="logout")
+            {
+                PersonAccount.getInstance().reset();
+                Session.Clear();
+            }
+            ViewBag.hlp= new LoginHelper(db.Account.ToList(), "", "", "Unknow");
+            return View(db.Account.ToList());
+        }
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
         

@@ -1,7 +1,10 @@
-﻿@model IEnumerable<MojDziennikv4.Models.Account>
+﻿@using MojDziennikv4.Models
+@using MojDziennikv4.Extensions
+@model IEnumerable<MojDziennikv4.Models.Account>
 
 @{
     ViewBag.Title = "Konta";
+    QueryOptions queryOptions = (QueryOptions)ViewBag.QueryOptions;
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
@@ -10,16 +13,16 @@
 <p>
     @Html.ActionLink("Stwórz nowe konto", "Create")
 </p>
-<table class="table">
+<table class="table table-bordered table-striped">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Login)
+            @Html.BuildSortableLink("Login", "Index", "Login", queryOptions)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Password)
+           @Html.BuildSortableLink("Hasło", "Index", "Password", queryOptions)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Account_Type)
+            @Html.BuildSortableLink("Typ konta", "Index", "Account_Type", queryOptions)
         </th>
         <th></th>
     </tr>

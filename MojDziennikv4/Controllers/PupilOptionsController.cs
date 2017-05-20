@@ -35,5 +35,13 @@ namespace MojDziennikv4.Controllers
         {
             return View(pupile);
         }
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }

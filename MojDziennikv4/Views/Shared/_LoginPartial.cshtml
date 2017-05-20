@@ -12,7 +12,7 @@
         }
     <ul class="nav navbar-nav navbar-right">
         <li>
-            @Html.ActionLink(Model.First_Name, "Index", "Login", routeValues: null, htmlAttributes: new { title = "Login" })
+            @Html.ActionLink(Model.First_Name, "Index", "Login", routeValues:new { message="logout"}, htmlAttributes: new { title = "logout" })
         </li>
     </ul>
     

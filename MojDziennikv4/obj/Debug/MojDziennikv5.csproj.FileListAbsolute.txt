@@ -86,3 +86,4 @@ C:\Users\MAR\Documents\Visual Studio 2015\Projects\MojDziennikv5\MojDziennikv4\b
 C:\Users\MAR\Documents\Visual Studio 2015\Projects\MojDziennikv5\MojDziennikv4\obj\Debug\MojDziennikv5.csprojResolveAssemblyReference.cache
 C:\Users\MAR\Documents\Visual Studio 2015\Projects\MojDziennikv5\MojDziennikv4\obj\Debug\MojDziennikv4.dll
 C:\Users\MAR\Documents\Visual Studio 2015\Projects\MojDziennikv5\MojDziennikv4\obj\Debug\MojDziennikv4.pdb
+C:\Users\MAR\Documents\Visual Studio 2015\Projects\MojDziennikv5\MojDziennikv4\bin\System.Linq.Dynamic.dll

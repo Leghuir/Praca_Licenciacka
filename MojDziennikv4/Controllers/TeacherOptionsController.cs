@@ -38,6 +38,13 @@ namespace MojDziennikv4.Controllers
             ViewBag.Class_Name = db.School_Class.ToList();
             return View();
         }
-
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }

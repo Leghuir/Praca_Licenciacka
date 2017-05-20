@@ -50,5 +50,13 @@ namespace MojDziennikv4.Controllers
             }
             return PartialView("TeacherEvents",events);
         }
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }

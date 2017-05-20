@@ -24,6 +24,15 @@ namespace MojDziennikv4.Models.DAL
         {
             accountId = 0;
         }
+        public void reset()
+        {
+            login = "";
+            type = "";
+            accountId = 0;
+            correct = false;
+            IsAuthenticated = false;
+
+        }
         public string Name
         {
             get

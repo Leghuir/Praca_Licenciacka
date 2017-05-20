@@ -1,7 +1,9 @@
-@using MojDziennikv4.Models.DAL
+﻿@using MojDziennikv4.Models.DAL
 @model IEnumerable<MojDziennikv4.Models.Account>
 
 @{
+    HttpResponse Response = System.Web.HttpContext.Current.Response;
+    
     Layout = null;
     bool udane = true;
 }
@@ -12,19 +14,20 @@
 <head>
     @Styles.Render("~/Content/login")
     <meta name="viewport" content="width=device-width" />
+    <meta charset="utf-8"> 
     <title>Index</title>
 	<link rel="stylesheet" href="css/style.css">
     @{ 
-        
-            int i = PersonAccount.checkpasses(ViewBag.hlp.db, ViewBag.hlp.Login, ViewBag.hlp.Password, ViewBag.hlp.Type);
-            switch (i)
-            {
-                case 3:
-    <meta http-equiv="Refresh" content="0; url=/Home/Index" />; ViewBag.hlp.Type = "Unknow"; PersonAccount.getInstance().IsAuthenticated = true;  break;
+
+        int i = PersonAccount.checkpasses(ViewBag.hlp.db, ViewBag.hlp.Login, ViewBag.hlp.Password, ViewBag.hlp.Type);
+        switch (i)
+        {
+            case 3:
+                ViewBag.hlp.Type = "Unknow"; PersonAccount.getInstance().IsAuthenticated = true; Response.Redirect("/Home/Index", true); break;
             case 2:
-    <meta http-equiv="Refresh" content="0; url=/Home/AsPupil" />; ViewBag.hlp.Type = "Unknow"; PersonAccount.getInstance().IsAuthenticated = true; break;
+                ViewBag.hlp.Type = "Unknow"; PersonAccount.getInstance().IsAuthenticated = true; Response.Redirect("/Home/AsPupil", true); break;
             case 1:
-    <meta http-equiv="Refresh" content="0; url=/Home/AsTeacher" />; ViewBag.hlp.Type = "Unknow"; PersonAccount.getInstance().IsAuthenticated = true; break;
+                ViewBag.hlp.Type = "Unknow"; PersonAccount.getInstance().IsAuthenticated = true; Response.Redirect("/Home/AsTeacher", true); break;
 
         }
 
@@ -65,10 +68,17 @@
 	</div>
 	<p class="error">Podano błędne dane logowania</p>
 </div>
-
+    @Scripts.Render("~/bundles/login");
 <script src='js/jquery.min.js'></script>
-<script src="js/index.js"></script>
-
+<script type="text/javascript">
+    $(".option").click(function () {
+        $(".option").removeClass("selected");
+        $(this).addClass("selected");
+        $(".message").text("Logujesz się jako: " + $(this).text());
+        $("option").removeAttr("selected", "selected");
+        $("option#" + $(this).attr("id") + "").attr("selected", "selected");
+    });
+</script>
 @if (!udane){
         <script type="text/javascript">
             $(".error").stop().animate(

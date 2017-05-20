@@ -15,5 +15,13 @@ namespace MojDziennikv4.Controllers
         {
             return PartialView(db.Pupil.Where(a => a.Class_Number.Equals(Klasa)).ToList());
         }
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }
