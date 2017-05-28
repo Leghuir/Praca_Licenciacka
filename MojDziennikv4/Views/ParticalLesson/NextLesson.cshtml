@@ -1,8 +1,31 @@
 ﻿@using MojDziennikv4.Models
 @model Lesson
-
-    <p>Następna lekcja</p>
-    <p>Sala: @Model.Class_Room.Class_Room_Number</p>
-    <p>Nauczyciel: @Model.Employee.Surname</p>
-    <p>Początek: @Model.Start_Time</p>
-    <p>Przedmiot: @Model.Subject.Subject_Name</p>
+@if (Model == null)
+{
+    <p> w najbliższym czasie nie ma żadnej lekcji</p>
+}
+else
+{
+    <table>
+        <tr>
+            <p>
+            <td class="tdwidthlong">Sala:</td>
+            <td> @Model.Class_Room.Class_Room_Number</td></p>
+        </tr>
+        <tr>
+            <p>
+            <td class="tdwidthlong">Nauczyciel:</td>
+            <td>@Model.Employee.Surname</td></p>
+        </tr>
+        <tr>
+            <p>
+            <td class="tdwidthlong">Początek:</td>
+            <td>@Model.Start_Time</td></p>
+        </tr>
+        <tr>
+            <p>
+            <td class="tdwidthlong">Przedmiot:</td>
+            <td>@Model.Subject.Subject_Name</td></p>
+        </tr>
+    </table>
+}

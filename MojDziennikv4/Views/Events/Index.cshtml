@@ -1,66 +1,73 @@
-﻿@model IEnumerable<MojDziennikv4.Models.Event>
+﻿@using MojDziennikv4.Models
+@using MojDziennikv4.Extensions
+@model IEnumerable<MojDziennikv4.Models.Event>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Wydarzenia";
+    QueryOptions<String> queryOptions = (QueryOptions<String>)ViewBag.QueryOptions;
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<!DOCTYPE html>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
-</head>
-<body>
+
+<div class="container" style="width:inherit">
+    <div class="row">
+        <div class="col-lg-6">
+            <h2>Wydarzenia</h2>
+        </div>
+        <div class="col-lg-3"></div>
+        <div class="col-lg-3 text-right">
+            @Html.BuildSearchableLink("Searchitem", "Wpisz szukaną fraze", "Index", "Employee.Surname", queryOptions)
+        </div>
+    </div>
+</div>
     <p>
-        @Html.ActionLink("Create New", "Create")
+        <a href="/Events/Create"><input type="button" value="Stwórz nowe konto" class="btn btn-default" /></a>
     </p>
-    <table class="table">
+    <table class="table table-bordered table-striped">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Start_Time)
+                @Html.BuildSortableLink("Czas rozpoczęcia", "Index", "Start_Time", queryOptions)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Duration_In_Days)
+                @Html.BuildSortableLink("Czas trwania w dniach", "Index", "Duration_In_Days", queryOptions)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Describe)
+                @Html.BuildSortableLink("Opis", "Index", "Describe", queryOptions)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Account_Group)
+                @Html.BuildSortableLink("Grupa docelowa", "Index", "Account_Group", queryOptions)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Employee.First_Name)
+                @Html.BuildSortableLink("Nazwisko twórcy", "Index", "Employee.Surname", queryOptions)
             </th>
             <th></th>
         </tr>
-    
-    @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Start_Time)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Duration_In_Days)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Describe)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Account_Group)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Employee.First_Name)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.Event_Id }) |
-                @Html.ActionLink("Details", "Details", new { id=item.Event_Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.Event_Id })
-            </td>
-        </tr>
-    }
-    
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Start_Time)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Duration_In_Days)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Describe)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Account_Group)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Employee.Surname)
+                </td>
+                <td>
+                    <a href="/Events/Edit/@item.Event_Id" class="reference">Edytuj</a>|
+                    <a href="/Events/Delete/@item.Event_Id" class="reference">Usuń</a>
+                </td>
+            </tr>
+        }
+
     </table>
-</body>
-</html>
+

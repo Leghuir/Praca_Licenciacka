@@ -1,19 +1,33 @@
-﻿@model MojDziennikv4.Models.Pupil
+﻿@model List<MojDziennikv4.Models.Note>
 @{
     ViewBag.Title = "Notes";
     Layout = "~/Views/Shared/_PupilLayout.cshtml";
 }
 
 <h2>Uwagi</h2>
-@for (int i = @Model.Note.ToList().Count - 1; i >= 0; i--)
+<table class="table table-bordered table-striped">
+    <tr>
+        <td>Pozytywna</td>
+        <td>Od Kogo</td>
+        <td>Data</td>
+        <td>Opis</td>
+    </tr>
+    @foreach (var note in Model)
+    {
+        <tr>
+            <td>
+            @if (note.Positve)
             {
-                int y = 1;
-    <p>
-        @if (@Model.Note.ToList().ElementAt(i).Positve)
-                { <div>pozytywna @Model.Note.ToList().ElementAt(i).Describe</div>}
-                else { <div>negatywna @Model.Note.ToList().ElementAt(i).Describe</div> }
-    </p>
-    if (y == 3)
-    { break; }
-    y++;
-}
+                <p>Tak</p>
+            }
+            else
+            {
+                <p>Nie</p>
+            }
+            </td>
+            <td>@note.Employee.Surname</td>
+            <td>@note.Note_Date.ToShortDateString()</td>
+            <td>@note.Describe</td>
+        </tr>
+    }
+</table>

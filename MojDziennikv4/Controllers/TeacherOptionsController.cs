@@ -7,9 +7,11 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MojDziennikv4.Models;
+using MojDziennikv4.Filters;
 
 namespace MojDziennikv4.Controllers
 {
+    [EmployeeAuthorization]
     public class TeacherOptionsController : Controller
     {
         private MojDziennikEntities db = new MojDziennikEntities();

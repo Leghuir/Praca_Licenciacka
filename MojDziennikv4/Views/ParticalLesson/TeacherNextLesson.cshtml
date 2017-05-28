@@ -6,5 +6,26 @@
 }
 else
 {
-    <p>@Model.Class_Number @Model.Start_Time @Model.Subject.Subject_Name @Model.Class_Room.Class_Room_Number</p>
+    <table>
+        <tr>
+            <p>
+            <td class="tdwidthlong">Sala:</td>
+            <td> @Model.Class_Room.Class_Room_Number</td></p>
+        </tr>
+        <tr>
+            <p>
+            <td class="tdwidthlong">Nauczyciel:</td>
+            <td>@Model.Employee.Surname</td></p>
+        </tr>
+        <tr>
+            <p>
+            <td class="tdwidthlong">Początek:</td>
+            <td>@Model.Start_Time</td></p>
+        </tr>
+        <tr>
+            <p>
+            <td class="tdwidthlong">Przedmiot:</td>
+            <td>@Model.Subject.Subject_Name</td></p>
+        </tr>
+    </table>
 }

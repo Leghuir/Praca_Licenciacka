@@ -1,90 +1,95 @@
-﻿@model IEnumerable<MojDziennikv4.Models.Employee>
+﻿@using MojDziennikv4.Models
+@using MojDziennikv4.Extensions
+@model IEnumerable<MojDziennikv4.Models.Employee>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Pracownicy";
+    QueryOptions<String> queryOptions = (QueryOptions<String>)ViewBag.QueryOptions;
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
-</head>
-<body>
+<div class="container" style="width:inherit">
+    <div class="row">
+        <div class="col-lg-6">
+            <h2>Pracownicy</h2>
+        </div>
+        <div class="col-lg-3"></div>
+        <div class="col-lg-3 text-right">
+            @Html.BuildSearchableLink("Searchitem", "Wpisz szukaną fraze", "Index", "Surname", queryOptions)
+        </div>
+    </div>
+</div>
     <p>
-        @Html.ActionLink("Create New", "Create")
+        <a href="/Employees/Create"><input type="button" value="Stwórz nowe konto" class="btn btn-default" /></a>
     </p>
-    <table class="table">
+    <table class="table table-bordered table-striped">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.First_Name)
+                @Html.BuildSortableLink("Imie", "Index", "First_Name", queryOptions)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Middle_Name)
+                @Html.BuildSortableLink("Drugie imie", "Index", "Middle_Name", queryOptions)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Surname)
+                @Html.BuildSortableLink("Nazwisko", "Index", "Surname", queryOptions)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Pesel_Number)
+                @Html.BuildSortableLink("Pesel", "Index", "Pesel_Number", queryOptions)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Telefon_Number)
+                @Html.BuildSortableLink("telefon", "Index", "Telefon_Number", queryOptions)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Hire_Date)
+                @Html.BuildSortableLink("Data przyjęcia", "Index", "Hire_Date", queryOptions)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Birth_Date)
+                @Html.BuildSortableLink("Data urodzienia", "Index", "Birth_Date", queryOptions)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Adress)
+                @Html.BuildSortableLink("Adres", "Index", "Adress", queryOptions)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Account.Login)
+                @Html.BuildSortableLink("Login do aplikacji", "Index", "Account.Login", queryOptions)
             </th>
             <th></th>
         </tr>
-    
-    @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.First_Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Middle_Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Surname)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Pesel_Number)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Telefon_Number)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Hire_Date)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Birth_Date)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Adress)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Account.Login)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.Employee_Id}) |
-                @Html.ActionLink("Details", "Details", new { id=item.Employee_Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.Employee_Id })
-            </td>
-        </tr>
-    }
-    
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.First_Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Middle_Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Surname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Pesel_Number)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Telefon_Number)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Hire_Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Birth_Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Adress)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Account.Login)
+                </td>
+                <td>
+                    <a href="/Employees/Edit/@item.Employee_Id" class="reference">Edytuj</a>|
+                    <a href="/Employees/Delete/@item.Employee_Id" class="reference">Usuń</a>
+                </td>
+            </tr>
+        }
+
     </table>
-</body>
-</html>
+

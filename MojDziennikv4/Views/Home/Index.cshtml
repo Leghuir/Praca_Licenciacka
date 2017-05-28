@@ -3,14 +3,20 @@
     ViewBag.Title = "Home Page";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-<table>
-
+<table class="table table-bordered table-striped">
+    <tr>
+        <td>Nazwa operacja</td>
+        <td>Data operacji</td>
+        <td>Osoba wykonująca operacje</td>
+        <td>Modyfikowany rekord</td>
+    </tr>
     @foreach(var log in Model)
     {
         <tr>
             <td>@log.oeration</td>
             <td>@log.operationTime.ToString()</td>
             <td>@log.personId</td>
+            <td>@log.record</td>
         </tr>
     }
 </table>

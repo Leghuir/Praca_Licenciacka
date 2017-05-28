@@ -6,10 +6,28 @@
 }
 else
 {
-    <p>Bieżąca lekcja</p>
-    <p>Sala: @Model.ElementAt(0).Class_Room.Class_Room_Number</p>
-    <p>Nauczyciel: @Model.ElementAt(0).Employee.Surname</p>
-    <p>Początek: @Model.ElementAt(0).Start_Time</p>
-    <p>Przedmiot: @Model.ElementAt(0).Subject.Subject_Name</p>
+    <table>
+        <tr>
+            <p>
+            <td class="tdwidthlong">Sala:</td>
+            <td> @Model.ElementAt(0).Class_Room.Class_Room_Number</td></p>
+        </tr>
+        <tr>
+            <p>
+            <td class="tdwidthlong">Nauczyciel:</td>
+            <td>@Model.ElementAt(0).Employee.Surname</td></p>
+        </tr>
+        <tr>
+            <p>
+            <td class="tdwidthlong">Początek:</td>
+            <td>@Model.ElementAt(0).Start_Time</td></p>
+        </tr>
+        <tr>
+            <p>
+            <td class="tdwidthlong">Przedmiot:</td>
+            <td>@Model.ElementAt(0).Subject.Subject_Name</td></p>
+        </tr>
+    </table>
+
 
 }

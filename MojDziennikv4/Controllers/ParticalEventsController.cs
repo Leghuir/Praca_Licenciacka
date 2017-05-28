@@ -5,9 +5,11 @@ using System.Web;
 using System.Web.Mvc;
 using MojDziennikv4.Models;
 using MojDziennikv4.Models.DAL;
-
+using System.Globalization;
+using System.Threading;
 namespace MojDziennikv4.Controllers
 {
+
     public class ParticalEventsController : Controller
     {
         private MojDziennikEntities db = new MojDziennikEntities();
@@ -17,14 +19,15 @@ namespace MojDziennikv4.Controllers
         // GET: ParticalEvents
         public ActionResult Index()
         {
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("pl-PL");
             events.Clear();
-            Pupil pupil = PersonAccount.GetPupilFromAccountId(person.accountId);
+            Pupil pupil = PersonAccount.GetPupilFromAccountId();
             foreach (var eve in db.Event.ToList())
             {
                 ap.accountGroup = eve.Account_Group;
                 ap.init();
 
-                if (ap.exits(person.AuthenticationType, pupil.Class_Number))
+                if (ap.exists(person.AuthenticationType, pupil.Class_Number))
                 {
                     events.Add(eve);
                 }
@@ -43,7 +46,7 @@ namespace MojDziennikv4.Controllers
                 String classNumer = "";
                 if (temp != null)
                     classNumer = temp.Class_Number;
-                if (ap.exits(person.AuthenticationType, classNumer))
+                if (ap.exists(person.AuthenticationType, classNumer))
                 {
                     events.Add(eve);
                 }

@@ -1,82 +1,95 @@
-﻿@model IEnumerable<MojDziennikv4.Models.Pupil>
+﻿@using MojDziennikv4.Models
+@using MojDziennikv4.Extensions
+@model IEnumerable<MojDziennikv4.Models.Pupil>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Uczniowie";
+    QueryOptions<String> queryOptions = (QueryOptions<String>)ViewBag.QueryOptions;
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>Index</h2>
 
+<div class="container" style="width:inherit">
+    <div class="row">
+        <div class="col-lg-6">
+            <h2>Uczniowie</h2>
+        </div>
+        <div class="col-lg-3"></div>
+        <div class="col-lg-3 text-right">
+            @Html.BuildSearchableLink("Searchitem", "Wpisz szukaną fraze", "Index", "Surname", queryOptions)
+        </div>
+    </div>
+</div>
 <p>
-    @Html.ActionLink("Create New", "Create")
+    <a href="/Pupils/Create"><input type="button" value="Stwórz nowe konto" class="btn btn-default" /></a>
 </p>
-<table class="table">
+<table class="table table-bordered table-striped">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.First_Name)
+            @Html.BuildSortableLink("Imie", "Index", "First_Name", queryOptions)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Middle_Name)
+            @Html.BuildSortableLink("2 imie", "Index", "Middle_Name", queryOptions)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Surname)
+            @Html.BuildSortableLink("Nazwisko", "Index", "Surname", queryOptions)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Pesel_Number)
+            @Html.BuildSortableLink("Pesel", "Index", "Pesel_Number", queryOptions)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Birth_Date)
+            @Html.BuildSortableLink("Data urodzenia", "Index", "Birth_Date", queryOptions)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.School_Id_Card_Number)
+            @Html.BuildSortableLink("Nymer legitymacji szkolnej", "Index", "School_Id_Card_Number", queryOptions)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Account.Login)
+            @Html.BuildSortableLink("Login użytkownika", "Index", "Account.Login", queryOptions)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Legal_Guardian.First_Name)
+            @Html.BuildSortableLink("Imie opiekuna", "Index", "Legal_Guardian.First_Name", queryOptions)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.School_Class.Profile)
+            @Html.BuildSortableLink("Klasa", "Index", "School_Class.Class_Number", queryOptions)
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.First_Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Middle_Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Surname)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Pesel_Number)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Birth_Date)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.School_Id_Card_Number)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Account.Login)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Legal_Guardian.First_Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.School_Class.Profile)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Pupil_Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Pupil_Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Pupil_Id })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.First_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Middle_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Surname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pesel_Number)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Birth_Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.School_Id_Card_Number)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Account.Login)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Legal_Guardian.First_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.School_Class.Class_Number)
+            </td>
+            <td>
+                <a href="/Pupils/Edit/@item.Pupil_Id" class="reference">Edytuj</a>|
+                <a href="/Pupils/Delete/@item.Pupil_Id" class="reference">Usuń</a>
+            </td>
+        </tr>
+    }
 
 </table>

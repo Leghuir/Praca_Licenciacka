@@ -1,64 +1,77 @@
-﻿@model IEnumerable<MojDziennikv4.Models.Lesson>
+﻿@using MojDziennikv4.Models
+@using MojDziennikv4.Extensions
+@model IEnumerable<MojDziennikv4.Models.Lesson>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Lekcje";
+    QueryOptions<String> queryOptions = (QueryOptions<String>)ViewBag.QueryOptions;
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>Index</h2>
 
+<div class="container" style="width:inherit">
+    <div class="row">
+        <div class="col-lg-6">
+            <h2>Lekcje</h2>
+        </div>
+        <div class="col-lg-3"></div>
+        <div class="col-lg-3 text-right">
+            @Html.BuildSearchableLink("Searchitem", "Wpisz szukaną fraze", "Index", "Class_Number", queryOptions)
+        </div>
+    </div>
+</div>
 <p>
-    @Html.ActionLink("Create New", "Create")
+    <a href="/Lessons/Create"><input type="button" value="Stwórz nowe konto" class="btn btn-default" /></a>
 </p>
-<table class="table">
+<table class="table table-bordered table-striped">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Day_Of_Week)
+            @Html.BuildSortableLink("Dzień tygodnia", "Index", "Day_Of_Week", queryOptions)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Start_Time)
+            @Html.BuildSortableLink("Godzina rozpoczęcia", "Index", "Start_Time", queryOptions)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Class_Room.Class_Room_Number)
+            @Html.BuildSortableLink("Sala", "Index", "Class_Room.Class_Room_Number", queryOptions)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Employee.First_Name)
+            @Html.BuildSortableLink("Nauczyciel", "Index", "Employee.Surname", queryOptions)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.School_Class.Profile)
+            @Html.BuildSortableLink("Klasa", "Index", "School_Class.Class_Number", queryOptions)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Subject.Subject_Name)
+            @Html.BuildSortableLink("Przedmiot", "Index", "Subject.Subject_Name", queryOptions)
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Day_Of_Week)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Start_Time)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Class_Room.Class_Room_Number)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Employee.First_Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.School_Class.Profile)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Subject.Subject_Name)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Lesson_Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Lesson_Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Lesson_Id })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Day_Of_Week)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Start_Time)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Class_Room.Class_Room_Number)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Employee.Surname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.School_Class.Class_Number)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Subject.Subject_Name)
+            </td>
+            <td>
+                <a href="/Lessons/Edit/@item.Lesson_Id" class="reference">Edytuj</a>|
+                <a href="/Lessons/Delete/@item.Lesson_Id" class="reference">Usuń</a>
+            </td>
+        </tr>
+    }
 
 </table>

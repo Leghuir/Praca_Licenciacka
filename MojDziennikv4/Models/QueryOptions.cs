@@ -6,14 +6,15 @@ using System.Linq.Dynamic;
 
 namespace MojDziennikv4.Models
 {
-    public class QueryOptions
+    public class QueryOptions<T> :IDisposable
     {
         public String SortFiled { get; set; }
         public SortOrder Sortorder { get; set; }
 
+        public T Searchitem{ get; set; }
         public QueryOptions()
         {
-            SortFiled = "Login";
+            SortFiled = "1";
             Sortorder = SortOrder.ASC;
 
         }
@@ -23,6 +24,12 @@ namespace MojDziennikv4.Models
             {
                 return String.Format("{0} {1}", SortFiled, Sortorder.ToString());
             }
+        }
+
+        public void Dispose()
+        {
+            
+
         }
     }
 }

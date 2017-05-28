@@ -3,22 +3,39 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
+using System.Linq.Dynamic;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MojDziennikv4.Models;
+using MojDziennikv4.Filters;
+using System.Web.ModelBinding;
 
 namespace MojDziennikv4.Controllers
 {
+    [AdminAuthorization]
     public class PupilsController : Controller
     {
         private MojDziennikEntities db = new MojDziennikEntities();
 
         // GET: Pupils
-        public ActionResult Index()
+        public ActionResult Index([Form] QueryOptions<String> queryOptions)
         {
-            var pupil = db.Pupil.Include(p => p.Account).Include(p => p.Legal_Guardian).Include(p => p.School_Class);
-            return View(pupil.ToList());
+            ViewBag.QueryOptions = queryOptions;
+            if (queryOptions.Searchitem != "" && queryOptions.Searchitem != null)
+                return View(db.Pupil.Where(a => a.Surname.IndexOf(queryOptions.Searchitem) != -1 ||
+                a.Account.Login.IndexOf(queryOptions.Searchitem) != -1 ||
+                a.Class_Number.IndexOf(queryOptions.Searchitem) != -1 ||
+                a.First_Name.IndexOf(queryOptions.Searchitem) != -1 ||
+                a.Legal_Guardian.First_Name.IndexOf(queryOptions.Searchitem) != -1 ||
+                a.Middle_Name.IndexOf(queryOptions.Searchitem) != -1 ||
+                a.Pesel_Number.IndexOf(queryOptions.Searchitem) != -1 ||
+                a.School_Id_Card_Number.IndexOf(queryOptions.Searchitem) != -1 ||
+                a.Birth_Date.ToString().IndexOf(queryOptions.Searchitem) != -1 
+
+
+                ).ToList()); //leter i could connect them
+            return View(db.Pupil.OrderBy(queryOptions.Sort).ToList());
         }
 
         // GET: Pupils/Details/5
@@ -52,6 +69,7 @@ namespace MojDziennikv4.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Pupil_Id,First_Name,Middle_Name,Surname,Pesel_Number,Legal_Guardian_Id,Birth_Date,School_Id_Card_Number,Account_Id,Class_Number")] Pupil pupil)
         {
+            LogManager.createlog("create", pupil.ToString());
             if (ModelState.IsValid)
             {
                 db.Pupil.Add(pupil);
@@ -90,6 +108,8 @@ namespace MojDziennikv4.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Pupil_Id,First_Name,Middle_Name,Surname,Pesel_Number,Legal_Guardian_Id,Birth_Date,School_Id_Card_Number,Account_Id,Class_Number")] Pupil pupil)
         {
+            Pupil accountTemp = db.Pupil.Find(pupil.Pupil_Id);
+            LogManager.createlog("Edit", accountTemp.ToString());
             if (ModelState.IsValid)
             {
                 db.Entry(pupil).State = EntityState.Modified;
@@ -122,6 +142,8 @@ namespace MojDziennikv4.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            Pupil account = db.Pupil.Find(id);
+            LogManager.createlog("delete", account.ToString());
             Pupil pupil = db.Pupil.Find(id);
             db.Pupil.Remove(pupil);
             db.SaveChanges();

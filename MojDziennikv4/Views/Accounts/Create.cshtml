@@ -1,4 +1,5 @@
-﻿@model MojDziennikv4.Models.Account
+﻿@using MojDziennikv4.Models
+@model MojDziennikv4.Models.Account
 
 @{
     ViewBag.Title = "Create";
@@ -35,7 +36,12 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Account_Type, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Account_Type, new { htmlAttributes = new { @class = "form-control" } })
+                <select id="Account_Type" name="Account_Type" class="form-control">
+                    @foreach (var option in Enum.GetValues(typeof(AccountType)))
+                    {
+                        <option value="@option.ToString()">@option</option>
+                    }
+                </select>
                 @Html.ValidationMessageFor(model => model.Account_Type, "", new { @class = "text-danger" })
             </div>
         </div>

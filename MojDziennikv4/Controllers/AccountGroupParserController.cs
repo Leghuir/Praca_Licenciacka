@@ -62,11 +62,18 @@ namespace MojDziennikv4.Controllers
                 }
             }
         }
-        public bool exits(String type, String userclass)
+        public bool exists(String type, String userclass)
         {
             if (this.accountTypes.Contains(type) && this.aviblesclasses.Contains(userclass))
                 return true;
                 return false;
+        }
+        public static bool EventMatcher(Event e, String type, String userclass)
+        {
+            AccountGroupParserController agp = new AccountGroupParserController();
+            agp.accountGroup = e.Account_Group;
+            agp.init();
+            return agp.exists(type, userclass);
         }
     }
 }

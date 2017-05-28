@@ -3,22 +3,32 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
+using System.Linq.Dynamic;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MojDziennikv4.Models;
+using MojDziennikv4.Filters;
+using System.Web.ModelBinding;
 
 namespace MojDziennikv4.Controllers
 {
+    [AdminAuthorization]
     public class LessonsController : Controller
     {
         private MojDziennikEntities db = new MojDziennikEntities();
 
         // GET: Lessons
-        public ActionResult Index()
+        public ActionResult Index([Form] QueryOptions<String> queryOptions)
         {
-            var lesson = db.Lesson.Include(l => l.Class_Room).Include(l => l.Employee).Include(l => l.School_Class).Include(l => l.Subject);
-            return View(lesson.ToList());
+            ViewBag.QueryOptions = queryOptions;
+            if (queryOptions.Searchitem != "" && queryOptions.Searchitem != null)
+                return View(db.Lesson.Where(a => a.Class_Number.IndexOf(queryOptions.Searchitem) != -1 ||
+                a.Class_Room_Number.IndexOf(queryOptions.Searchitem) != -1 ||
+                a.Day_Of_Week.ToString().IndexOf(queryOptions.Searchitem) != -1 ||
+                a.Start_Time.ToString().IndexOf(queryOptions.Searchitem) != -1 ||
+                a.Subject.Subject_Name.IndexOf(queryOptions.Searchitem) != -1).ToList()); //leter i could connect them
+            return View(db.Lesson.OrderBy(queryOptions.Sort).ToList());
         }
 
         // GET: Lessons/Details/5
@@ -53,6 +63,7 @@ namespace MojDziennikv4.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Lesson_Id,Class_Number,Subject_Id,Employee_Id,Day_Of_Week,Start_Time,Class_Room_Number")] Lesson lesson)
         {
+            LogManager.createlog("create", lesson.ToString());
             if (ModelState.IsValid)
             {
                 db.Lesson.Add(lesson);
@@ -93,6 +104,8 @@ namespace MojDziennikv4.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Lesson_Id,Class_Number,Subject_Id,Employee_Id,Day_Of_Week,Start_Time,Class_Room_Number")] Lesson lesson)
         {
+            Lesson accountTemp = db.Lesson.Find(lesson.Lesson_Id);
+            LogManager.createlog("Edit", accountTemp.ToString());
             if (ModelState.IsValid)
             {
                 db.Entry(lesson).State = EntityState.Modified;
@@ -126,6 +139,8 @@ namespace MojDziennikv4.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            Lesson account = db.Lesson.Find(id);
+            LogManager.createlog("delete", account.ToString());
             Lesson lesson = db.Lesson.Find(id);
             db.Lesson.Remove(lesson);
             db.SaveChanges();

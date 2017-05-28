@@ -3,22 +3,38 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
+using System.Linq.Dynamic;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MojDziennikv4.Models;
+using MojDziennikv4.Filters;
+using System.Web.ModelBinding;
 
 namespace MojDziennikv4.Controllers
 {
+    [AdminAuthorization]
     public class EmployeesController : Controller
     {
         private MojDziennikEntities db = new MojDziennikEntities();
 
         // GET: Employees
-        public ActionResult Index()
+        public ActionResult Index([Form] QueryOptions<String> queryOptions)
         {
-            var employee = db.Employee.Include(e => e.Account);
-            return View(employee.ToList());
+            ViewBag.QueryOptions = queryOptions;
+            if (queryOptions.Searchitem != "" && queryOptions.Searchitem != null)
+                return View(db.Employee.Where(a => a.Surname.IndexOf(queryOptions.Searchitem) != -1 ||
+                a.Account.Login.IndexOf(queryOptions.Searchitem) != -1 ||
+                a.Adress.IndexOf(queryOptions.Searchitem) != -1 ||
+                a.First_Name.IndexOf(queryOptions.Searchitem) != -1 ||
+                a.Middle_Name.IndexOf(queryOptions.Searchitem) != -1 ||
+                a.Pesel_Number.IndexOf(queryOptions.Searchitem) != -1 ||
+                a.Telefon_Number.IndexOf(queryOptions.Searchitem) != -1 ||
+                a.Birth_Date.Value.ToString().IndexOf(queryOptions.Searchitem) != -1 ||
+                a.Hire_Date.Value.ToString().IndexOf(queryOptions.Searchitem) !=-1
+
+                ).ToList()); //leter i could connect them
+            return View(db.Employee.OrderBy(queryOptions.Sort).ToList());
         }
 
         // GET: Employees/Details/5
@@ -50,6 +66,7 @@ namespace MojDziennikv4.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Employee_ID,First_Name,Middle_Name,Surname,Pesel_Number,Telefon_Number,Account_Id,Hire_Date,Birth_Date,Adress")] Employee employee)
         {
+            LogManager.createlog("create", employee.ToString());
             if (ModelState.IsValid)
             {
                 db.Employee.Add(employee);
@@ -84,6 +101,8 @@ namespace MojDziennikv4.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Employee_ID,First_Name,Middle_Name,Surname,Pesel_Number,Telefon_Number,Account_Id,Hire_Date,Birth_Date,Adress")] Employee employee)
         {
+            Employee accountTemp = db.Employee.Find(employee.Employee_Id);
+            LogManager.createlog("Edit", accountTemp.ToString());
             if (ModelState.IsValid)
             {
                 db.Entry(employee).State = EntityState.Modified;
@@ -114,6 +133,8 @@ namespace MojDziennikv4.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            Employee account = db.Employee.Find(id);
+            LogManager.createlog("delete", account.ToString());
             Employee employee = db.Employee.Find(id);
             db.Employee.Remove(employee);
             db.SaveChanges();

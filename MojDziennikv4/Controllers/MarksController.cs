@@ -4,21 +4,34 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Linq.Dynamic;
 using System.Web;
 using System.Web.Mvc;
 using MojDziennikv4.Models;
+using MojDziennikv4.Filters;
+using System.Web.ModelBinding;
 
 namespace MojDziennikv4.Controllers
 {
+    [AdminAuthorization]
     public class MarksController : Controller
     {
         private MojDziennikEntities db = new MojDziennikEntities();
 
         // GET: Marks
-        public ActionResult Index()
+        public ActionResult Index([Form] QueryOptions<String> queryOptions)
         {
-            var mark = db.Mark.Include(m => m.Employee).Include(m => m.Subject).Include(m => m.Pupil);
-            return View(mark.ToList());
+            ViewBag.QueryOptions = queryOptions;
+            if (queryOptions.Searchitem != "" && queryOptions.Searchitem != null)
+                return View(db.Mark.Where(a => a.Pupil.Surname.IndexOf(queryOptions.Searchitem) != -1 ||
+                a.Describe.IndexOf(queryOptions.Searchitem) != -1 ||
+                a.Employee.Surname.IndexOf(queryOptions.Searchitem) != -1 ||
+                a.Mark_Date.ToString().IndexOf(queryOptions.Searchitem) != -1 ||
+                a.Subject.Subject_Name.IndexOf(queryOptions.Searchitem) != -1 ||
+                a.Value.ToString().IndexOf(queryOptions.Searchitem) != -1 ||
+                a.Weight.Value.ToString().IndexOf(queryOptions.Searchitem) != -1 
+                ).ToList()); //leter i could connect them
+            return View(db.Mark.OrderBy(queryOptions.Sort).ToList());
         }
 
         // GET: Marks/Details/5
@@ -52,6 +65,9 @@ namespace MojDziennikv4.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Mark_Id,Value,Weight,Pupil_Id,Employee_Id,Subject_Id,Describe,Mark_Date")] Mark mark)
         {
+            Mark accountTemp = db.Mark.Find(mark.Mark_Id);
+            LogManager.createlog("Edit", accountTemp.ToString());
+            LogManager.createlog("create", mark.ToString());
             if (ModelState.IsValid)
             {
                 db.Mark.Add(mark);
@@ -90,6 +106,8 @@ namespace MojDziennikv4.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Mark_Id,Value,Weight,Pupil_Id,Employee_Id,Subject_Id,Describe,Mark_Date")] Mark mark)
         {
+            Mark accountTemp = db.Mark.Find(mark.Mark_Id);
+            LogManager.createlog("Edit", accountTemp.ToString());
             if (ModelState.IsValid)
             {
                 db.Entry(mark).State = EntityState.Modified;
@@ -122,6 +140,8 @@ namespace MojDziennikv4.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            Mark account = db.Mark.Find(id);
+            LogManager.createlog("delete", account.ToString());
             Mark mark = db.Mark.Find(id);
             db.Mark.Remove(mark);
             db.SaveChanges();

@@ -21,11 +21,11 @@ namespace MojDziennikv4.Extensions
             return new HtmlString(JsonConvert.SerializeObject(model, settings));
         }
         public static MvcHtmlString BuildSortableLink(this HtmlHelper htmlHelper, string fieldName,
-            string actionName,string sortFiled,QueryOptions queryOptions)
+            string actionName,string sortFiled,QueryOptions<String> queryOptions)
         {
             var UrlHelper = new UrlHelper(htmlHelper.ViewContext.RequestContext);
             var isCurrentSortFiled = queryOptions.SortFiled == sortFiled;
-            return new MvcHtmlString(string.Format("<a href\"{0}\" > {1} {2}</a>",
+            return new MvcHtmlString(string.Format("<a href=\"{0}\" > {1} {2}</a>",
                 UrlHelper.Action(actionName, new
                 {
                     SortFiled = sortFiled,
@@ -33,7 +33,7 @@ namespace MojDziennikv4.Extensions
 
                 }), fieldName, BuildSortIcon(isCurrentSortFiled, queryOptions)));
         }
-        public static string BuildSortIcon(bool isCurrentSortField, QueryOptions queryOptions)
+        public static string BuildSortIcon(bool isCurrentSortField, QueryOptions<String> queryOptions)
         {
             string sortIcon = "sort";
             if(isCurrentSortField)
@@ -43,6 +43,17 @@ namespace MojDziennikv4.Extensions
                     sortIcon += "-alt";
             }
             return String.Format("<span class=\"{0} {1}{2}\"></span>","glyphicon","glyphicon-",sortIcon);
+        }
+        public static MvcHtmlString BuildSearchableLink(this HtmlHelper htmlHelper, string fieldName,string fieldVaule,
+            string actionName, string searchFiled, QueryOptions<String> queryOptions)
+        {
+            var UrlHelper = new UrlHelper(htmlHelper.ViewContext.RequestContext);
+            var isCurrentSortFiled = queryOptions.SortFiled == searchFiled; //niepotrzebne
+            return new MvcHtmlString(string.Format("<form action=\"{0}\"> <input type=\"text\" name=\"{2}\" placeholder=\"{1}\" class=\"form-control\"><br><input type=\"submit\" value=\"Szukaj\" class=\"btn btn - default\" ></form>",
+                UrlHelper.Action(actionName, new
+                {
+                    SearchFiled = searchFiled
+                }), fieldVaule, fieldName));
         }
     }
 }

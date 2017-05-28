@@ -10,18 +10,27 @@ using System.Web.Mvc;
 using MojDziennikv4.Models;
 using MojDziennikv4.Models.DAL;
 using System.Web.ModelBinding;
+using MojDziennikv4.Filters;
 
 namespace MojDziennikv4.Controllers
 {
+    [AdminAuthorization]
     public class AccountsController : Controller
     {
         private MojDziennikEntities db = new MojDziennikEntities();
 
         // GET: Accounts
-        public ActionResult Index([Form] QueryOptions queryOptions)
+
+        public ActionResult Index([Form] QueryOptions<String> queryOptions)
         {
-            ViewBag.QueryOptions = queryOptions;
-            return View(db.Account.OrderBy(queryOptions.Sort).ToList());
+            
+                ViewBag.QueryOptions = queryOptions;
+                if (queryOptions.Searchitem != "" && queryOptions.Searchitem != null)
+                    return View(db.Account.Where(a => a.Login.IndexOf(queryOptions.Searchitem) != -1 ||
+                     a.Account_Type.IndexOf(queryOptions.Searchitem) != -1 ||
+                     a.Password.IndexOf(queryOptions.Searchitem) != -1
+                    ).ToList()); 
+                return View(db.Account.OrderBy(queryOptions.Sort).ToList());
         }
 
         // GET: Accounts/Details/5
@@ -54,7 +63,7 @@ namespace MojDziennikv4.Controllers
         {
             if (ModelState.IsValid)
             {
-                LogManager.SaveLog("create"+ account.ToString() +','+ DateTime.Now.Ticks+','+ PersonAccount.getInstance().accountId);
+                LogManager.createlog("create", account.ToString());
                 db.Account.Add(account);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -85,8 +94,10 @@ namespace MojDziennikv4.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Account_Id,Login,Password,Account_Type")] Account account)
         {
+            String accountTemp = db.Account.Find(account.Account_Id).ToString();
             if (ModelState.IsValid)
             {
+                LogManager.createlog("Edit", accountTemp);
                 db.Entry(account).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -115,11 +126,13 @@ namespace MojDziennikv4.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Account account = db.Account.Find(id);
+            LogManager.createlog("delete",account.ToString());
+            LogManager.SaveLog("delete" + ',' + DateTime.Now.Ticks + ',' + PersonAccount.getInstance().accountId + ',' + account.ToString());
             db.Account.Remove(account);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
+        
         protected override void Dispose(bool disposing)
         {
             if (disposing)

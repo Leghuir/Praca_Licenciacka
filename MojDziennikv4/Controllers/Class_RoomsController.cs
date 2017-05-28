@@ -3,22 +3,32 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
+using System.Linq.Dynamic;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MojDziennikv4.Models;
+using MojDziennikv4.Filters;
+using System.Web.ModelBinding;
 
 namespace MojDziennikv4.Controllers
 {
+    [AdminAuthorization]
     public class Class_RoomsController : Controller
     {
         private MojDziennikEntities db = new MojDziennikEntities();
 
         // GET: Class_Rooms
-        public ActionResult Index()
+        public ActionResult Index([Form] QueryOptions<String> queryOptions)
         {
-            var class_Room = db.Class_Room.Include(c => c.Employee);
-            return View(class_Room.ToList());
+            ViewBag.QueryOptions = queryOptions;
+            if (queryOptions.Searchitem != "" && queryOptions.Searchitem != null)
+                return View((db.Class_Room.Where(a => a.Class_Room_Number.IndexOf(queryOptions.Searchitem) != -1 ||
+                a.Employee.Surname.IndexOf(queryOptions.Searchitem) != -1 ||
+                a.Equipment_Description.IndexOf(queryOptions.Searchitem) != -1 ||
+                a.Size.Value.ToString().IndexOf(queryOptions.Searchitem) != -1
+                ).ToList())); //leter i could connect them
+            return View(db.Class_Room.OrderBy(queryOptions.Sort).ToList());
         }
 
         // GET: Class_Rooms/Details/5
@@ -50,6 +60,7 @@ namespace MojDziennikv4.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Class_Room_Number,Employee_Id,Size,Subject_Id,Equipment_Description")] Class_Room class_Room)
         {
+            LogManager.createlog("create", class_Room.ToString());
             if (ModelState.IsValid)
             {
                 db.Class_Room.Add(class_Room);
@@ -84,6 +95,8 @@ namespace MojDziennikv4.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Class_Room_Number,Employee_Id,Size,Subject_Id,Equipment_Description")] Class_Room class_Room)
         {
+            Class_Room accountTemp = db.Class_Room.Find(class_Room.Class_Room_Number);
+            LogManager.createlog("Edit", accountTemp.ToString());
             if (ModelState.IsValid)
             {
                 db.Entry(class_Room).State = EntityState.Modified;
@@ -114,6 +127,8 @@ namespace MojDziennikv4.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
+            Class_Room account = db.Class_Room.Find(id);
+            LogManager.createlog("delete", account.ToString());
             Class_Room class_Room = db.Class_Room.Find(id);
             db.Class_Room.Remove(class_Room);
             db.SaveChanges();

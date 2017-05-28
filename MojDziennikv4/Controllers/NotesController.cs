@@ -3,22 +3,34 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
+using System.Linq.Dynamic;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MojDziennikv4.Models;
+using MojDziennikv4.Filters;
+using System.Web.ModelBinding;
 
 namespace MojDziennikv4.Controllers
 {
+    [AdminAuthorization]
     public class NotesController : Controller
     {
         private MojDziennikEntities db = new MojDziennikEntities();
 
         // GET: Notes
-        public ActionResult Index()
+        public ActionResult Index([Form] QueryOptions<String> queryOptions)
         {
+            ViewBag.QueryOptions = queryOptions;
+            if (queryOptions.Searchitem != "" && queryOptions.Searchitem != null)
+                return View(db.Note.Where(a => a.Employee.Surname.IndexOf(queryOptions.Searchitem) != -1 ||
+                a.Describe.IndexOf(queryOptions.Searchitem) != -1 ||
+                a.Note_Date.ToString().IndexOf(queryOptions.Searchitem) != -1 ||
+                a.Positve.ToString().IndexOf(queryOptions.Searchitem) != -1 ||
+                a.Pupil.Surname.IndexOf(queryOptions.Searchitem) != -1
+                ).ToList()); //leter i could connect them
             var note = db.Note.Include(n => n.Employee).Include(n => n.Pupil);
-            return View(note.ToList());
+            return View(db.Note.OrderBy(queryOptions.Sort).ToList());
         }
 
         // GET: Notes/Details/5
@@ -51,6 +63,7 @@ namespace MojDziennikv4.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Note_Id,Pupil_Id,Employee_Id,Note_Date,Positve,Describe")] Note note)
         {
+            LogManager.createlog("create", note.ToString());
             if (ModelState.IsValid)
             {
                 db.Note.Add(note);
@@ -87,6 +100,8 @@ namespace MojDziennikv4.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Note_Id,Pupil_Id,Employee_Id,Note_Date,Positve,Describe")] Note note)
         {
+            Note accountTemp = db.Note.Find(note.Note_Id);
+            LogManager.createlog("Edit", accountTemp.ToString());
             if (ModelState.IsValid)
             {
                 db.Entry(note).State = EntityState.Modified;
@@ -118,6 +133,8 @@ namespace MojDziennikv4.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            Note account = db.Note.Find(id);
+            LogManager.createlog("delete", account.ToString());
             Note note = db.Note.Find(id);
             db.Note.Remove(note);
             db.SaveChanges();

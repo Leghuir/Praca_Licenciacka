@@ -1,52 +1,73 @@
-﻿@model IEnumerable<MojDziennikv4.Models.Class_Room>
+﻿@using MojDziennikv4.Models
+@using MojDziennikv4.Extensions
+@model IEnumerable<MojDziennikv4.Models.Class_Room>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Sale";
+    QueryOptions<String> queryOptions = (QueryOptions<String>)ViewBag.QueryOptions;
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>Index</h2>
 
+
+<div class="container" style="width:inherit">
+    <div class="row">
+        <div class="col-lg-6">
+            <h2>Sale</h2>
+        </div>
+        <div class="col-lg-3"></div>
+        <div class="col-lg-3 text-right">
+            @Html.BuildSearchableLink("Searchitem", "Wpisz szukaną fraze", "Index", "Class_Room_Number", queryOptions)
+        </div>
+    </div>
+</div>
 <p>
-    @Html.ActionLink("Create New", "Create")
+    <a href="/Class_Rooms/Create"><input type="button" value="Stwórz nowe konto" class="btn btn-default" /></a>
 </p>
-<table class="table">
+<table class="table table-bordered table-striped">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Size)
+            @Html.BuildSortableLink("Numer Sali", "Index", "Class_Room_Number", queryOptions)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Subject_Id)
+            @Html.BuildSortableLink("Wielkość w m2", "Index", "Size", queryOptions)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Equipment_Description)
+            @Html.BuildSortableLink("Id przedmiotu klasy", "Index", "Subject_Id", queryOptions)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Employee.First_Name)
+            @Html.BuildSortableLink("Opis wyposarzenia", "Index", "Equipment_Description", queryOptions)
+        </th>
+        <th>
+            @Html.BuildSortableLink("Nazwisko opiekuna klasy", "Index", "Employee.Surname", queryOptions)
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Size)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Subject_Id)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Equipment_Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Employee.First_Name)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Class_Room_Number }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Class_Room_Number }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Class_Room_Number })
-        </td>
-    </tr>
-}
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Class_Room_Number)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Size)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Subject_Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Equipment_Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Employee.Surname)
+            </td>
+            <td>
+                <a href="/Class_Rooms/Edit/@item.Class_Room_Number" class="reference">Edytuj</a>|
+                <a href="/Class_Rooms/Delete/@item.Class_Room_Number" class="reference">Usuń</a>
+            </td>
+        </tr>
+    }
 
 </table>

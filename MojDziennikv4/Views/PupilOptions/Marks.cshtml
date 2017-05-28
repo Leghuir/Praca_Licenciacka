@@ -7,21 +7,21 @@
 }
 
 <h2>Marks</h2>
-<table border="1">
+<table class="table table-bordered table-striped">
     @foreach (String val in Model.Keys)
     {
         <tr>
-            <td>@val</td>
+            <td class="tdwidthlong">@val</td>
             
             @foreach (Mark mark in Model[val])
             {
-            <td>@mark.Value</td>
+            <td class="tdwidthshort text-center" title="@Model[val].ElementAt(i).Describe">@mark.Value</td>
             i += 1;
             }
-            @for (; i < 8; i++)
+            @for (; i < 15; i++)
             {
                 
-                <td></td>
+                <td class="tdwidthshort"></td>
             }
         </tr>
         i = 0;

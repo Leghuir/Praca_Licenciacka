@@ -1,4 +1,5 @@
-﻿using MojDziennikv4.Models;
+﻿using MojDziennikv4.Filters;
+using MojDziennikv4.Models;
 using MojDziennikv4.Models.DAL;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Web.Mvc;
 
 namespace MojDziennikv4.Controllers
 {
+    [PupilAuthorization]
     public class PupilOptionsController : Controller
     {
         private MojDziennikEntities db = new MojDziennikEntities();
@@ -33,7 +35,12 @@ namespace MojDziennikv4.Controllers
             }
         public ActionResult Notes()
         {
-            return View(pupile);
+            return View(pupile.Note.ToList());
+        }
+        public ActionResult Events()
+        {
+                String type= PersonAccount.getInstance().AuthenticationType;
+                return View(db.Event.ToList().Where(a => AccountGroupParserController.EventMatcher(a, type, pupile.Class_Number)).ToList());
         }
         protected override void Dispose(bool disposing)
         {

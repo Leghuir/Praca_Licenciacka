@@ -3,15 +3,25 @@
 @model IEnumerable<MojDziennikv4.Models.Account>
 
 @{
-    ViewBag.Title = "Konta";
-    QueryOptions queryOptions = (QueryOptions)ViewBag.QueryOptions;
+    ViewBag.Title = "Konta użytkowników";
+    QueryOptions<String> queryOptions = (QueryOptions<String>)ViewBag.QueryOptions;
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    int i = 0;
 }
-
-<h2>Konta użytkowników</h2>
-
+<div class="container" style="width:inherit">
+    <div class="row">
+        <div class="col-lg-6">
+            <h2>Konta użytkowników</h2>
+        </div>
+        <div class="col-lg-3"></div>
+        <div class="col-lg-3 text-right">
+            @Html.BuildSearchableLink("Searchitem", "Wpisz szukaną fraze", "Index", "Login", queryOptions)
+        </div>
+    </div>
+</div>
 <p>
-    @Html.ActionLink("Stwórz nowe konto", "Create")
+
+        <a href="/Accounts/Create"><input type="button" value="Stwórz nowe konto" class="btn btn-default"/></a>
 </p>
 <table class="table table-bordered table-striped">
     <tr>
@@ -19,7 +29,7 @@
             @Html.BuildSortableLink("Login", "Index", "Login", queryOptions)
         </th>
         <th>
-           @Html.BuildSortableLink("Hasło", "Index", "Password", queryOptions)
+            @Html.BuildSortableLink("Hasło", "Index", "Password", queryOptions)
         </th>
         <th>
             @Html.BuildSortableLink("Typ konta", "Index", "Account_Type", queryOptions)
@@ -27,22 +37,32 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Login)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Password)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Account_Type)
-        </td>
-        <td>
-            @Html.ActionLink("Edytuj", "Edit", new { id=item.Account_Id }) |
-            @Html.ActionLink("Usuń", "Delete", new { id=item.Account_Id })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Login)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Password)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Account_Type)
+            </td>
+            <td>
+                @if (@i % 2 == 0){
+                <a href="/Accounts/Edit/@item.Account_Id" class="reference" style="color:white">Edytuj</a> <span>|</span>
+                <a href = "/Accounts/Delete/@item.Account_Id" class="reference" style="color:white">Usuń</a>
+                    i++;
+                }
+                else
+                {
+                    <a href="/Accounts/Edit/@item.Account_Id" class="reference" style="color:black">Edytuj</a> <span>|</span>
+                    <a href="/Accounts/Delete/@item.Account_Id" class="reference" style="color:black">Usuń</a>
+                    i++;
+                }
+            </td>
+        </tr>
+    }
 
 </table>

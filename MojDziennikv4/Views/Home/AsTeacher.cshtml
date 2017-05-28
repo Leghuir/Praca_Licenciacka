@@ -3,23 +3,24 @@
     Layout = "~/Views/Shared/_TeacherLayout.cshtml";
 }
 
-<div class="container">
+<div class="container" id='maingridpane'>
     <div class="row">
-        <div class="col-lg-6">
-        Plan Lekcji
+        <div class="col-lg-6 informacionPanel">
+            <h2>Plan Lekcji</h2>
             @Html.Action("TeacherLessonInDay", "ParticalLesson")
         </div>
-        <div class="col-lg-6">
-            Wydarzenia
+        <div class="col-lg-6 informacionPanel">
+            <h2>Wydarzenia</h2>
             @Html.Action("TeacherEvents", "ParticalEvents")
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-6">
-            Następna lekcja
+        <div class="col-lg-6 informacionPanel">
+            <h2>Następna lekcja</h2>
         @Html.Action("TeacherNextLesson", "ParticalLesson")
         </div>
-        <div class="col-lg-6">Kalendarz
+        <div class="col-lg-6 informacionPanel">
+            <h2>Kalendarz</h2>
             <script type="text/javascript">
                 calendar();
             </script>
@@ -28,4 +29,3 @@
 
 </div>
 
-<p>Use this area to provide additional information.</p>

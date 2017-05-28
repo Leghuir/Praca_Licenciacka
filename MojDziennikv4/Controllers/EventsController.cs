@@ -3,22 +3,33 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
+using System.Linq.Dynamic;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MojDziennikv4.Models;
+using MojDziennikv4.Filters;
+using System.Web.ModelBinding;
 
 namespace MojDziennikv4.Controllers
 {
+    [AdminAuthorization]
     public class EventsController : Controller
     {
         private MojDziennikEntities db = new MojDziennikEntities();
 
         // GET: Events
-        public ActionResult Index()
+        public ActionResult Index([Form] QueryOptions<String> queryOptions)
         {
-            var even = db.Event.Include(eve => eve.Employee);
-            return View(even.ToList());
+            ViewBag.QueryOptions = queryOptions;
+            if (queryOptions.Searchitem != "" && queryOptions.Searchitem != null)
+                return View(db.Event.Where(a => a.Employee.Surname.IndexOf(queryOptions.Searchitem) != -1 ||
+                a.Account_Group.IndexOf(queryOptions.Searchitem) != -1 ||
+                a.Describe.IndexOf(queryOptions.Searchitem) != -1 ||
+                a.Duration_In_Days.Value.ToString().IndexOf(queryOptions.Searchitem) != -1 ||
+                a.Start_Time.Value.ToString().IndexOf(queryOptions.Searchitem) != -1
+                ).ToList()); //leter i could connect them
+            return View(db.Event.OrderBy(queryOptions.Sort).ToList());
         }
 
         // GET: Events/Details/5
@@ -50,6 +61,7 @@ namespace MojDziennikv4.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Event_Id,Employee_Id,Start_Time,Duration_In_Days,Describe,Account_Group")] Event @event)
         {
+            LogManager.createlog("create", @event.ToString());
             if (ModelState.IsValid)
             {
                 db.Event.Add(@event);
@@ -84,6 +96,8 @@ namespace MojDziennikv4.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Event_Id,Employee_Id,Start_Time,Duration_In_Days,Describe,Account_Group")] Event @event)
         {
+            Event accountTemp = db.Event.Find(@event.Event_Id);
+            LogManager.createlog("Edit", accountTemp.ToString());
             if (ModelState.IsValid)
             {
                 db.Entry(@event).State = EntityState.Modified;

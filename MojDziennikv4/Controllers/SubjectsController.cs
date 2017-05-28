@@ -3,22 +3,29 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
+using System.Linq.Dynamic;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MojDziennikv4.Models;
 using System.Data.Entity.Validation;
+using MojDziennikv4.Filters;
+using System.Web.ModelBinding;
 
 namespace MojDziennikv4.Controllers
 {
+    [AdminAuthorization]
     public class SubjectsController : Controller
     {
         private MojDziennikEntities db = new MojDziennikEntities();
 
         // GET: Subjects
-        public ActionResult Index()
+        public ActionResult Index([Form] QueryOptions<String> queryOptions)
         {
-            return View(db.Subject.ToList());
+            ViewBag.QueryOptions = queryOptions;
+            if (queryOptions.Searchitem != "" && queryOptions.Searchitem != null)
+                return View(db.Subject.Where(a => a.Subject_Name.IndexOf(queryOptions.Searchitem) != -1 ).ToList()); //leter i could connect them
+            return View(db.Subject.OrderBy(queryOptions.Sort).ToList());
         }
 
         // GET: Subjects/Details/5
@@ -49,6 +56,7 @@ namespace MojDziennikv4.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Subject_Id,Subject_Name")] Subject subject)
         {
+            LogManager.createlog("create", subject.ToString());
             if (ModelState.IsValid)
             {
                 db.Subject.Add(subject);
@@ -96,6 +104,8 @@ namespace MojDziennikv4.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Subject_Id,Subject_Name")] Subject subject)
         {
+            Subject accountTemp = db.Subject.Find(subject.Subject_Id);
+            LogManager.createlog("Edit", accountTemp.ToString());
             if (ModelState.IsValid)
             {
                 db.Entry(subject).State = EntityState.Modified;
@@ -125,6 +135,8 @@ namespace MojDziennikv4.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            Subject account = db.Subject.Find(id);
+            LogManager.createlog("delete", account.ToString());
             Subject subject = db.Subject.Find(id);
             db.Subject.Remove(subject);
             db.SaveChanges();

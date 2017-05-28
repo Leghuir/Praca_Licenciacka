@@ -14,18 +14,22 @@ namespace MojDziennikv4.Models.DAL
         private String login;
         private String type;
         public int accountId { get; set; }
+        public bool legalGuardianLog { get; set; }
         private bool correct =false;
         private PersonAccount(String login,String type)
         {
+            legalGuardianLog = false;
             this.login = login;
             this.type = type;
         }
         private PersonAccount()
         {
+            legalGuardianLog = false;
             accountId = 0;
         }
         public void reset()
         {
+            legalGuardianLog = false;
             login = "";
             type = "";
             accountId = 0;
@@ -92,13 +96,6 @@ namespace MojDziennikv4.Models.DAL
             PersonAccount.instance = new PersonAccount(login,type);
             return PersonAccount.instance;
         }
-        public static Pupil GetPupilFromAccountId(int accountid)
-        {
-            MojDziennikEntities db = new MojDziennikEntities();
-            
-            Account account =db.Account.Where(a => a.Account_Id == accountid).FirstOrDefault();
-            return account.Pupil.ElementAt(0);
-        }
         public static Pupil GetPupilFromAccountId()
         {
             MojDziennikEntities db = new MojDziennikEntities();
@@ -108,18 +105,14 @@ namespace MojDziennikv4.Models.DAL
                 return new Pupil();
             return account.Pupil.ElementAt(0);
         }
-        public static Legal_Guardian GetLegal_GuardianFromAccountId(int accountid)
+        public static Legal_Guardian GetLegal_GuardianFromAccountId()
         {
             MojDziennikEntities db = new MojDziennikEntities();
-            Account account = (Account)db.Account.Where<Account>(a => a.Account_Id == accountid);
+            int accid = PersonAccount.getInstance().accountId;
+            Account account = db.Account.Where(a => a.Account_Id == accid).FirstOrDefault();
+            if (account == null)
+                return new Legal_Guardian();
             return account.Legal_Guardian.ElementAt(0);
-        }
-        public static Employee GetEmployeeFromAccountId(int accountid)
-        {
-            MojDziennikEntities db = new MojDziennikEntities();
-            var account = db.Account.ToList(); //Where(a => a.Account_Id == accountid)
-            //var temp = account.FirstOrDefault();
-            return new Employee();
         }
         public static Employee GetEmployeeFromAccountId()
         {
@@ -135,11 +128,19 @@ namespace MojDziennikv4.Models.DAL
             {
                 if (m.Login.Equals(login) && m.Password.Equals(password) && m.Account_Type.ToString().Equals(at))
                 {
-                    PersonAccount.instance.Name = login;
+                    using (MojDziennikEntities db = new MojDziennikEntities())
+                    { 
+                        PersonAccount.instance.Name = login;
                     PersonAccount.instance.AuthenticationType = at;
                     PersonAccount.instance.accountId = m.Account_Id;
                     PersonAccount.instance.IsAuthenticated = true;
-                    switch (m.Account_Type.ToString())
+                    if (at=="Opiekun")
+                    {
+                            PersonAccount.instance.legalGuardianLog = true;
+                            PersonAccount.instance.AuthenticationType = "Uczen";
+                            PersonAccount.instance.accountId = db.Legal_Guardian.Where(a => a.Account_Id == PersonAccount.instance.accountId).ToList().FirstOrDefault().Pupil.ToList().FirstOrDefault().Account_Id;
+                    }
+                        switch (m.Account_Type.ToString())
 
                     {
                         case "Nauczyciel": return 1;
@@ -147,7 +148,7 @@ namespace MojDziennikv4.Models.DAL
                         case "Opiekun": return 2;
                         default: return 3;
                     }
-                    
+                    }
                 }
 
             }

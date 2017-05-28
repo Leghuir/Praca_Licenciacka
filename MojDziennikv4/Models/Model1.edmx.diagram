@@ -5,16 +5,16 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="850341368c014fa1898b45b932b83821" Name="Diagram1">
-        <EntityTypeShape EntityType="MojDziennikModel.Account" Width="1.5" PointX="0.75" PointY="8.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="MojDziennikModel.Class_Room" Width="1.5" PointX="5.25" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MojDziennikModel.Account" Width="1.5" PointX="2.875" PointY="10.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="MojDziennikModel.Class_Room" Width="1.5" PointX="4.625" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MojDziennikModel.Employee" Width="1.5" PointX="3" PointY="5.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="MojDziennikModel.Legal_Guardian" Width="1.5" PointX="3" PointY="13" IsExpanded="true" />
-        <EntityTypeShape EntityType="MojDziennikModel.Lesson" Width="1.5" PointX="7.5" PointY="5.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="MojDziennikModel.Mark" Width="1.5" PointX="9.75" PointY="8.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="MojDziennikModel.Note" Width="1.5" PointX="12.75" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="MojDziennikModel.Legal_Guardian" Width="1.5" PointX="5.25" PointY="12.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MojDziennikModel.Lesson" Width="1.5" PointX="6.5" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="MojDziennikModel.Mark" Width="1.5" PointX="8.75" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="MojDziennikModel.Note" Width="1.5" PointX="9.625" PointY="9.375" IsExpanded="true" />
         <EntityTypeShape EntityType="MojDziennikModel.Pupil" Width="1.5" PointX="7.5" PointY="9.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="MojDziennikModel.School_Class" Width="1.5" PointX="5.25" PointY="7" IsExpanded="true" />
-        <EntityTypeShape EntityType="MojDziennikModel.Subject" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="MojDziennikModel.School_Class" Width="1.5" PointX="6" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="MojDziennikModel.Subject" Width="1.5" PointX="8.5" PointY="3.875" IsExpanded="true" />
         <EntityTypeShape EntityType="MojDziennikModel.Event" Width="1.5" PointX="5.25" PointY="9.875" IsExpanded="true" />
         <AssociationConnector Association="MojDziennikModel.FK_Opiekun_Konto" ManuallyRouted="false" />
         <AssociationConnector Association="MojDziennikModel.FK_Pracownik_Konto" ManuallyRouted="false" />

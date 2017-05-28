@@ -1,4 +1,5 @@
 ﻿@using MojDziennikv4.Controllers
+@using MojDziennikv4.Models
 @model MojDziennikv4.Models.Pupil
 @{
     ViewBag.Title = "Pupil";
@@ -7,56 +8,52 @@
 
 <div class="container" id='maingridpane'>
     <div class="row" id="rowgridpane">
-        <div class="col-sm-4 col-md-4 col-lg-4">
+        <div class="col-sm-4 col-md-4 col-lg-4 informacionPanel">
             <div id="personaldata">
-                @{
-                    String[] PupilDetails = new string[7];
-                    PupilDetails[0] = "Imie " + Model.First_Name + Environment.NewLine;
-                    PupilDetails[1] = "Drugie imie " + Model.Middle_Name + Environment.NewLine;
-                    PupilDetails[2] = "Nazwisko " + Model.Surname + Environment.NewLine;
-                    PupilDetails[3] = "Pesel " + Model.Pesel_Number + Environment.NewLine;
-                    PupilDetails[4] = "Data urodzenia " + Model.Birth_Date.ToString() + Environment.NewLine;
-                    PupilDetails[5] = "Numer legitymacji " + Model.School_Id_Card_Number + Environment.NewLine;
-                    PupilDetails[6] = "Klasa " + Model.Class_Number + Environment.NewLine;
-
-                }
+                <h2>Dane ucznia</h2>
                 <img src="/Content/Images/pupilicon.jpg" class="img-rounded" width="100" height="100" />
-                @foreach (string s in PupilDetails)
-                {
-                    <p>@s</p>
-                }
+                <table>
+                    @foreach (Pair<string,string> s in @ViewBag.PupilDetails)
+                    {
+                        <tr>
+                            <td class="tdwidthlong">@s.first</td>
+                            <td>@s.secound</td>
+                        </tr>
+                    }
+                </table>
             </div>
         </div>
-        <div class="col-sm-4 col-md-4 col-lg-4" id="calendar">
+        <div class="col-sm-4 col-md-4 col-lg-4 informacionPanel text-center" id="calendar">
+            <h2>Kalendarz</h2>
             <script type="text/javascript">
                 calendar();
             </script>
         </div>
-        <div class="col-sm-4 col-md-4 col-lg-4" id="zegarek">@Html.Action("NextLesson", "ParticalLesson")</div>
+        <div class="col-sm-4 col-md-4 col-lg-4 informacionPanel" id="zegarek">
+            <h2>Następna lekcja</h2>
+        @Html.Action("NextLesson", "ParticalLesson")</div>
 
     </div>
     <div class="row" id="rowgridpane">
 
-        <div class="col-sm-4 col-md-4 col-lg-4" id="Wydarzenia">
+        <div class="col-sm-4 col-md-4 col-lg-4 informacionPanel" id="Wydarzenia">
             <h2>Wydarzenia</h2>
             @Html.Action("Index", "ParticalEvents")
         </div>
-        <div class="col-sm-4 col-md-4 col-lg-4" id="planlekcji">
+        <div class="col-sm-4 col-md-4 col-lg-4 informacionPanel" id="planlekcji">
             <h2>Plan Lekcji</h2>
             @Html.Action("LessonInDay", "ParticalLesson")
         </div>
-        <div class="col-sm-4 col-md-4 col-lg-4" id="BieżącaLekcja">
+        <div class="col-sm-4 col-md-4 col-lg-4 informacionPanel" id="BieżącaLekcja">
             <h2>Bieżąca lekcja</h2>
-            @Html.Action("CurrentLesson", "ParticalLesson")
-            <hr/>
-            
+            @Html.Action("CurrentLesson", "ParticalLesson")            
         </div>
 
     </div>
     <div class="row" id="rowgridpane">
 
-        <div class="col-sm-4 col-md-4 col-lg-4" id="Średniazbieżącejlekcji">
-            <h3>Średnia z bieżącej lekcji</h3>
+        <div class="col-sm-4 col-md-4 col-lg-4 informacionPanel" id="Średniazbieżącejlekcji">
+            <h2>Średnia z bieżącej lekcji</h2>
             @{
                 float weightSum1 = 0f;
                 float sumOfMarkMultipleByWeight1 = 0f;
@@ -71,16 +68,16 @@
                     srednia1 = (sumOfMarkMultipleByWeight1 / weightSum1);
                 }
             }
-            @if(srednia1!=0f)
-            { 
-            <h2>@srednia1.ToString("0.00")</h2>
+            @if (!float.IsNaN(srednia1))
+            {
+                <h1 style="color:red;"> @srednia1.ToString("0.00")</h1>
             }
             else
             {
-                <h2>aktualnie nie ma lekcji albo nie masz jeszcze z niego ocen</h2>
+                <p>aktualnie nie ma lekcji albo nie masz jeszcze z niego ocen</p>
             }
         </div>
-        <div class="col-sm-4 col-md-4 col-lg-4" id="uwagi">
+        <div class="col-sm-4 col-md-4 col-lg-4 informacionPanel" id="uwagi">
             <h2>Uwagi</h2>
             @for (int i = @Model.Note.ToList().Count - 1; i >= 0; i--)
             {
@@ -95,7 +92,7 @@
                 y++;
             }
         </div>
-        <div class="col-sm-4 col-md-4 col-lg-4" id="Średniaważonanarok">
+        <div class="col-sm-4 col-md-4 col-lg-4 informacionPanel" id="Średniaważonanarok">
             <h2>Średnia ważona na rok</h2>
             @{
                 float weightSum = 0f;
@@ -107,7 +104,7 @@
                 }
                 float srednia = (sumOfMarkMultipleByWeight / weightSum);
             }
-            <h2>@srednia.ToString("0.00")</h2>
+            <h1 style="color:red;"> @srednia.ToString("0.00")</h1>
         </div>
 
     </div>

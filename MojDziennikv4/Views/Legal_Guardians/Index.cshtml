@@ -1,64 +1,77 @@
-﻿@model IEnumerable<MojDziennikv4.Models.Legal_Guardian>
+﻿@using MojDziennikv4.Models
+@using MojDziennikv4.Extensions
+@model IEnumerable<MojDziennikv4.Models.Legal_Guardian>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Opiekunowie";
+    QueryOptions<String> queryOptions = (QueryOptions<String>)ViewBag.QueryOptions;
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>Index</h2>
 
+<div class="container" style="width:inherit">
+    <div class="row">
+        <div class="col-lg-6">
+            <h2>Opiekunowie</h2>
+        </div>
+        <div class="col-lg-3"></div>
+        <div class="col-lg-3 text-right">
+            @Html.BuildSearchableLink("Searchitem", "Wpisz szukaną fraze", "Index", "Surname", queryOptions)
+        </div>
+    </div>
+</div>
 <p>
-    @Html.ActionLink("Create New", "Create")
+    <a href="/Legal_Guardians/Create"><input type="button" value="Stwórz nowe konto" class="btn btn-default" /></a>
 </p>
-<table class="table">
+<table class="table table-bordered table-striped">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.First_Name)
+            @Html.BuildSortableLink("Imie", "Index", "First_Name", queryOptions)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Middle_Name)
+            @Html.BuildSortableLink("2 imie", "Index", "Middle_Name", queryOptions)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Surname)
+            @Html.BuildSortableLink("Nazwisko", "Index", "Surname", queryOptions)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Telefon_Number)
+            @Html.BuildSortableLink("Telefon", "Index", "Telefon_Number", queryOptions)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Adress)
+            @Html.BuildSortableLink("Adres", "Index", "Adress", queryOptions)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Account.Login)
+            @Html.BuildSortableLink("Login użytkownika", "Index", "Account.Logine", queryOptions)
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.First_Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Middle_Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Surname)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Telefon_Number)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Adress)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Account.Login)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Legal_Guardian_Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Legal_Guardian_Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Legal_Guardian_Id })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.First_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Middle_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Surname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Telefon_Number)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Adress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Account.Login)
+            </td>
+            <td>
+                <a href="/Legal_Guardians/Edit/@item.Legal_Guardian_Id" class="reference">Edytuj</a>|
+                <a href="/Legal_Guardians/Delete/@item.Legal_Guardian_Id" class="reference">Usuń</a>
+            </td>
+        </tr>
+    }
 
 </table>

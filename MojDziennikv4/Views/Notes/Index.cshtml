@@ -1,58 +1,79 @@
-﻿@model IEnumerable<MojDziennikv4.Models.Note>
+﻿@using MojDziennikv4.Models
+@using MojDziennikv4.Extensions
+@model IEnumerable<MojDziennikv4.Models.Note>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Uwagi";
+    QueryOptions<String> queryOptions = (QueryOptions<String>)ViewBag.QueryOptions;
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>Index</h2>
 
+<div class="container" style="width:inherit">
+    <div class="row">
+        <div class="col-lg-6">
+            <h2>Uwagi</h2>
+        </div>
+        <div class="col-lg-3"></div>
+        <div class="col-lg-3 text-right">
+            @Html.BuildSearchableLink("Searchitem", "Wpisz szukaną fraze", "Index", "Employee.Surname", queryOptions)
+        </div>
+    </div>
+</div>
 <p>
-    @Html.ActionLink("Create New", "Create")
+    <a href="/Notes/Create"><input type="button" value="Stwórz nowe konto" class="btn btn-default" /></a>
 </p>
-<table class="table">
+<table class="table table-bordered table-striped">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Note_Date)
+            @Html.BuildSortableLink("Data nadania uwagi", "Index", "Note_Date", queryOptions)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Positve)
+            @Html.BuildSortableLink("Pozytywna", "Index", "Positve", queryOptions)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Describe)
+            @Html.BuildSortableLink("Opis", "Index", "Describe", queryOptions)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Employee.First_Name)
+            @Html.BuildSortableLink("Nazwisko nauczyciela", "Index", "Employee.Surname", queryOptions)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Pupil.First_Name)
+            @Html.BuildSortableLink("Nazwisko ucznia", "Index", "Pupil.Surname", queryOptions)
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Note_Date)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Positve)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Describe)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Employee.First_Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Pupil.First_Name)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Note_Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Note_Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Note_Id })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Note_Date)
+            </td>
+            <td>
+                @if (item.Positve)
+                {
+                    <p>Tak</p>
+                }
+                else
+                {
+                    <p>Nie</p>
+                }
+                
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Describe)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Employee.Surname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pupil.Surname)
+            </td>
+            <td>
+                <a href="/Notes/Edit/@item.Note_Id" class="reference">Edytuj</a>|
+                <a href="/Notes/Delete/@item.Note_Id" class="reference">Usuń</a>
+            </td>
+        </tr>
+    }
 
 </table>

@@ -57,9 +57,6 @@ html {
       -ms-text-size-adjust: 100%;
 }
 
-body {
-  margin: 0;
-}
 
 a:focus {
   outline: thin dotted;
@@ -310,13 +307,6 @@ html {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
-body {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 14px;
-  line-height: 1.428571429;
-  color: #333333;
-  background-color: #ffffff;
-}
 
 input,
 button,
@@ -1463,7 +1453,8 @@ th {
 }
 
 .table-bordered {
-  border: 1px solid #dddddd;
+    border-collapse: collapse;
+  border: 1px solid #000000;
 }
 
 .table-bordered > thead > tr > th,
@@ -1472,7 +1463,7 @@ th {
 .table-bordered > thead > tr > td,
 .table-bordered > tbody > tr > td,
 .table-bordered > tfoot > tr > td {
-  border: 1px solid #dddddd;
+  border: 2px solid #000000;
 }
 
 .table-bordered > thead > tr > th,

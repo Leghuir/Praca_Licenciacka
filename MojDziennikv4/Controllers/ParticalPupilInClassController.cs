@@ -1,4 +1,5 @@
-﻿using MojDziennikv4.Models;
+﻿using MojDziennikv4.Filters;
+using MojDziennikv4.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Web.Mvc;
 
 namespace MojDziennikv4.Controllers
 {
+    [EmployeeAuthorization]
     public class ParticalPupilInClassController : Controller
     {
         private MojDziennikEntities db = new MojDziennikEntities(); 

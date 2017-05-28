@@ -3,22 +3,30 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
+using System.Linq.Dynamic;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MojDziennikv4.Models;
+using MojDziennikv4.Filters;
+using System.Web.ModelBinding;
 
 namespace MojDziennikv4.Controllers
 {
+    [AdminAuthorization]
     public class School_ClassController : Controller
     {
         private MojDziennikEntities db = new MojDziennikEntities();
 
         // GET: School_Class
-        public ActionResult Index()
+        public ActionResult Index([Form] QueryOptions<String> queryOptions)
         {
-            var school_Class = db.School_Class.Include(s => s.Employee).Include(s => s.Lesson);
-            return View(school_Class.ToList());
+            ViewBag.QueryOptions = queryOptions;
+            if (queryOptions.Searchitem != "" && queryOptions.Searchitem != null)
+                return View(db.School_Class.Where(a => a.Class_Number.IndexOf(queryOptions.Searchitem) != -1 ||
+                a.Employee.Surname.IndexOf(queryOptions.Searchitem) != -1 ||
+                a.Profile.IndexOf(queryOptions.Searchitem) != -1).ToList()); //leter i could connect them
+            return View(db.School_Class.OrderBy(queryOptions.Sort).ToList());
         }
 
         // GET: School_Class/Details/5
@@ -51,6 +59,7 @@ namespace MojDziennikv4.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Class_Number,Profile,Employee_Id")] School_Class school_Class)
         {
+            LogManager.createlog("create", school_Class.ToString());
             if (ModelState.IsValid)
             {
                 db.School_Class.Add(school_Class);
@@ -87,6 +96,8 @@ namespace MojDziennikv4.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Class_Number,Profile,Employee_Id")] School_Class school_Class)
         {
+            School_Class accountTemp = db.School_Class.Find(school_Class.Class_Number);
+            LogManager.createlog("Edit", accountTemp.ToString());
             if (ModelState.IsValid)
             {
                 db.Entry(school_Class).State = EntityState.Modified;
@@ -118,6 +129,8 @@ namespace MojDziennikv4.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
+            School_Class account = db.School_Class.Find(id);
+            LogManager.createlog("delete", account.ToString());
             School_Class school_Class = db.School_Class.Find(id);
             db.School_Class.Remove(school_Class);
             db.SaveChanges();

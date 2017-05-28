@@ -1,0 +1,27 @@
+﻿@using MojDziennikv4.Models;
+@model List<MojDziennikv4.Models.Event>
+
+@{ 
+    ViewBag.Title = "Marks";
+    Layout = "~/Views/Shared/_PupilLayout.cshtml";
+}
+<h2>Wydarzenia</h2>
+<table class="table table-bordered table-striped">
+    <tr>
+        <td>Twórca wydarzenia</td>
+        <td>Początek obowiązywania</td>
+        <td>Koniec obowiązywania</td>
+        <td>Opis</td>
+    </tr>
+
+            @foreach (var eve in Model)
+            {
+                <tr>
+                    <td>@eve.Employee.Surname</td>
+                    <td>@eve.Start_Time.Value.ToShortDateString()</td>
+                    <td>@eve.Start_Time.Value.AddDays(@eve.Duration_In_Days.Value).ToShortDateString()</td>
+                    <td>@eve.Describe</td>
+                </tr>
+            }
+
+</table>

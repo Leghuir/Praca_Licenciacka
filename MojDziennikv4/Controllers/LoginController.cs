@@ -32,12 +32,13 @@ namespace MojDziennikv4.Controllers
         }
         public ActionResult Index(String message)
         {
-            if(message=="logout")
+            ViewBag.hlp = new LoginHelper(db.Account.ToList(), "", "", "Unknow");
+            if (message=="logout")
             {
                 PersonAccount.getInstance().reset();
                 Session.Clear();
             }
-            ViewBag.hlp= new LoginHelper(db.Account.ToList(), "", "", "Unknow");
+            
             return View(db.Account.ToList());
         }
         protected override void Dispose(bool disposing)
