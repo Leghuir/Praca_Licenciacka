@@ -33,5 +33,9 @@ namespace MojDziennikv4.Models
         public virtual ICollection<Employee> Employee { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Pupil> Pupil { get; set; }
+        public override string ToString()
+        {
+            return "Account Id: "+ Account_Id+ " Login: "+ Login+ " Password: "+ Password+ " Account Type: "+ Account_Type;
+        }
     }
 }

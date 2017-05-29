@@ -100,8 +100,12 @@ namespace MojDziennikv4.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Note_Id,Pupil_Id,Employee_Id,Note_Date,Positve,Describe")] Note note)
         {
-            Note accountTemp = db.Note.Find(note.Note_Id);
-            LogManager.createlog("Edit", accountTemp.ToString());
+            String accountTemp = "";
+            using (MojDziennikEntities tempdb = new MojDziennikEntities())
+            {
+                accountTemp = tempdb.Note.Find(note.Note_Id).ToString();
+            }
+            LogManager.createlog("Edit", accountTemp);
             if (ModelState.IsValid)
             {
                 db.Entry(note).State = EntityState.Modified;

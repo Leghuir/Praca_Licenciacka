@@ -96,7 +96,11 @@ namespace MojDziennikv4.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Event_Id,Employee_Id,Start_Time,Duration_In_Days,Describe,Account_Group")] Event @event)
         {
-            Event accountTemp = db.Event.Find(@event.Event_Id);
+            String accountTemp = "";
+            using (MojDziennikEntities tempdb = new MojDziennikEntities())
+            {
+                accountTemp = tempdb.Event.Find(@event.Event_Id).ToString();
+            }
             LogManager.createlog("Edit", accountTemp.ToString());
             if (ModelState.IsValid)
             {

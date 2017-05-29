@@ -29,7 +29,7 @@ namespace MojDziennikv4.Controllers
                     return View(db.Account.Where(a => a.Login.IndexOf(queryOptions.Searchitem) != -1 ||
                      a.Account_Type.IndexOf(queryOptions.Searchitem) != -1 ||
                      a.Password.IndexOf(queryOptions.Searchitem) != -1
-                    ).ToList()); 
+                    ).ToList()); //leter i could connect them
                 return View(db.Account.OrderBy(queryOptions.Sort).ToList());
         }
 
@@ -94,7 +94,11 @@ namespace MojDziennikv4.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Account_Id,Login,Password,Account_Type")] Account account)
         {
-            String accountTemp = db.Account.Find(account.Account_Id).ToString();
+            String accountTemp = "";
+            using (MojDziennikEntities tempdb = new MojDziennikEntities())
+            {
+                accountTemp = tempdb.Account.Find(account.Account_Id).ToString();
+            }
             if (ModelState.IsValid)
             {
                 LogManager.createlog("Edit", accountTemp);

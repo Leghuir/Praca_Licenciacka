@@ -21,7 +21,14 @@ namespace MojDziennikv4.Models
         public int Day_Of_Week { get; set; }
         public string Start_Time { get; set; }
         public string Class_Room_Number { get; set; }
-    
+
+        public override string ToString()
+        {
+            return "Lesson Id: " + Lesson_Id + " Class number: " +
+                Class_Number + " Subject Id: " + Subject_Id +
+                " Employee Id: " + Employee_Id + " Day of week: " + Day_Of_Week +
+                " Start time: " + Start_Time + " Class room number: " + Class_Room_Number;
+        }
         public virtual Class_Room Class_Room { get; set; }
         public virtual Employee Employee { get; set; }
         public virtual School_Class School_Class { get; set; }

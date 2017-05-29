@@ -24,7 +24,11 @@ namespace MojDziennikv4.Models
         public string Class_Number { get; set; }
         public string Profile { get; set; }
         public Nullable<int> Employee_Id { get; set; }
-    
+
+        public override string ToString()
+        {
+            return "School Class Class number: " + Class_Number + " Profile: " +Profile + " Employee Id: " + Employee_Id;
+        }
         public virtual Employee Employee { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Lesson> Lesson { get; set; }

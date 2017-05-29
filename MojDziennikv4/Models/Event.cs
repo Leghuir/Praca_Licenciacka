@@ -20,7 +20,13 @@ namespace MojDziennikv4.Models
         public Nullable<int> Duration_In_Days { get; set; }
         public string Describe { get; set; }
         public string Account_Group { get; set; }
-    
+        public override string ToString()
+        {
+            return "Event Id: " + Event_Id + " Employee Id: " +
+                Employee_Id.GetValueOrDefault() + " Start Time: " + Start_Time.GetValueOrDefault().ToShortDateString() +
+                " Duration in days: " + Duration_In_Days.GetValueOrDefault() + " Describe: " + Describe +
+                " Account group: " + Account_Group;
+        }
         public virtual Employee Employee { get; set; }
     }
 }

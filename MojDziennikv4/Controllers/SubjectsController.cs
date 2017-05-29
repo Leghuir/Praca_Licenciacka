@@ -104,8 +104,12 @@ namespace MojDziennikv4.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Subject_Id,Subject_Name")] Subject subject)
         {
-            Subject accountTemp = db.Subject.Find(subject.Subject_Id);
-            LogManager.createlog("Edit", accountTemp.ToString());
+            String accountTemp = "";
+            using (MojDziennikEntities tempdb = new MojDziennikEntities())
+            {
+                accountTemp = tempdb.Subject.Find(subject.Subject_Id).ToString();
+            }
+            LogManager.createlog("Edit", accountTemp);
             if (ModelState.IsValid)
             {
                 db.Entry(subject).State = EntityState.Modified;

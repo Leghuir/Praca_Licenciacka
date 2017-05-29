@@ -27,7 +27,13 @@ namespace MojDziennikv4.Models
         public string Telefon_Number { get; set; }
         public int Account_Id { get; set; }
         public string Adress { get; set; }
-    
+        public override string ToString()
+        {
+            return "Legal Guardian Id: " + Legal_Guardian_Id + " First name: " +
+                First_Name + " Middle Name: " + Middle_Name +
+                " Surname: " + Surname + " Telefon number: " + Telefon_Number +
+                " Account Id: " + Account_Id + " Adress:" + Adress;
+        }
         public virtual Account Account { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Pupil> Pupil { get; set; }

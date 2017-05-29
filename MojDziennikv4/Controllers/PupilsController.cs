@@ -108,8 +108,12 @@ namespace MojDziennikv4.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Pupil_Id,First_Name,Middle_Name,Surname,Pesel_Number,Legal_Guardian_Id,Birth_Date,School_Id_Card_Number,Account_Id,Class_Number")] Pupil pupil)
         {
-            Pupil accountTemp = db.Pupil.Find(pupil.Pupil_Id);
-            LogManager.createlog("Edit", accountTemp.ToString());
+            String accountTemp = "";
+            using (MojDziennikEntities tempdb = new MojDziennikEntities())
+            {
+                accountTemp = tempdb.Pupil.Find(pupil.Pupil_Id).ToString();
+            }
+            LogManager.createlog("Edit", accountTemp);
             if (ModelState.IsValid)
             {
                 db.Entry(pupil).State = EntityState.Modified;

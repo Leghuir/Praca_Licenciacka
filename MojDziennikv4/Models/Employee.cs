@@ -35,7 +35,15 @@ namespace MojDziennikv4.Models
         public Nullable<System.DateTime> Hire_Date { get; set; }
         public Nullable<System.DateTime> Birth_Date { get; set; }
         public string Adress { get; set; }
-    
+
+        public override string ToString()
+        {
+            return "Employee Id: " + Employee_Id + " First name: " +
+                First_Name + " Middle Name: " + Middle_Name +
+                " Surname: " + Surname + " Pesel nember: " + Pesel_Number + " Telefon number: "+ Telefon_Number+
+                " Account Id: "+Account_Id+" Hire Date: "+ Hire_Date.GetValueOrDefault().ToShortDateString()+
+                " Birth date: "+Birth_Date.GetValueOrDefault().ToShortDateString()+ " Adress:" + Adress;
+        }
         public virtual Account Account { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Class_Room> Class_Room { get; set; }

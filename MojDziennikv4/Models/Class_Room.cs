@@ -29,5 +29,11 @@ namespace MojDziennikv4.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Lesson> Lesson { get; set; }
         public virtual Employee Employee { get; set; }
+        public override string ToString()
+        {
+            return "Class_Room Class room number: " + Class_Room_Number + " Employee Id: " +
+                Employee_Id.GetValueOrDefault() + " Size: " + Size.GetValueOrDefault() + 
+                " Subject Id: " + Subject_Id + " Equipment_Description: " + Equipment_Description;
+        }
     }
 }

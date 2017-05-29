@@ -106,8 +106,12 @@ namespace MojDziennikv4.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Mark_Id,Value,Weight,Pupil_Id,Employee_Id,Subject_Id,Describe,Mark_Date")] Mark mark)
         {
-            Mark accountTemp = db.Mark.Find(mark.Mark_Id);
-            LogManager.createlog("Edit", accountTemp.ToString());
+            String accountTemp = "";
+            using (MojDziennikEntities tempdb = new MojDziennikEntities())
+            {
+                accountTemp = tempdb.Mark.Find(mark.Mark_Id).ToString();
+            }
+            LogManager.createlog("Edit", accountTemp);
             if (ModelState.IsValid)
             {
                 db.Entry(mark).State = EntityState.Modified;

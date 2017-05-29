@@ -101,8 +101,12 @@ namespace MojDziennikv4.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Employee_ID,First_Name,Middle_Name,Surname,Pesel_Number,Telefon_Number,Account_Id,Hire_Date,Birth_Date,Adress")] Employee employee)
         {
-            Employee accountTemp = db.Employee.Find(employee.Employee_Id);
-            LogManager.createlog("Edit", accountTemp.ToString());
+            String accountTemp = "";
+            using (MojDziennikEntities tempdb = new MojDziennikEntities())
+            {
+                accountTemp = tempdb.Employee.Find(employee.Employee_Id).ToString();
+            }
+            LogManager.createlog("Edit", accountTemp);
             if (ModelState.IsValid)
             {
                 db.Entry(employee).State = EntityState.Modified;

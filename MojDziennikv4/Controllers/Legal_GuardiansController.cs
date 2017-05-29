@@ -97,8 +97,12 @@ namespace MojDziennikv4.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Legal_Guardian_Id,First_Name,Middle_Name,Surname,Telefon_Number,Account_Id,Adress")] Legal_Guardian legal_Guardian)
         {
-            Legal_Guardian accountTemp = db.Legal_Guardian.Find(legal_Guardian.Legal_Guardian_Id);
-            LogManager.createlog("Edit", accountTemp.ToString());
+            String accountTemp = "";
+            using (MojDziennikEntities tempdb = new MojDziennikEntities())
+            {
+                accountTemp = tempdb.Legal_Guardian.Find(legal_Guardian.Legal_Guardian_Id).ToString();
+            }
+            LogManager.createlog("Edit", accountTemp);
             if (ModelState.IsValid)
             {
                 db.Entry(legal_Guardian).State = EntityState.Modified;

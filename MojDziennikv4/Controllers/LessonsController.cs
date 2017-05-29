@@ -104,8 +104,12 @@ namespace MojDziennikv4.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Lesson_Id,Class_Number,Subject_Id,Employee_Id,Day_Of_Week,Start_Time,Class_Room_Number")] Lesson lesson)
         {
-            Lesson accountTemp = db.Lesson.Find(lesson.Lesson_Id);
-            LogManager.createlog("Edit", accountTemp.ToString());
+            String accountTemp = "";
+            using (MojDziennikEntities tempdb = new MojDziennikEntities())
+            {
+                accountTemp = tempdb.Lesson.Find(lesson.Lesson_Id).ToString();
+            }
+            LogManager.createlog("Edit", accountTemp);
             if (ModelState.IsValid)
             {
                 db.Entry(lesson).State = EntityState.Modified;

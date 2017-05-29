@@ -22,7 +22,15 @@ namespace MojDziennikv4.Models
         public int Subject_Id { get; set; }
         public string Describe { get; set; }
         public System.DateTime Mark_Date { get; set; }
-    
+
+        public override string ToString()
+        {
+            return "Mark Id: " + Mark_Id + " Value: " +
+                Value + " Weight: " + Weight.GetValueOrDefault() +
+                " Pupil Id: " + Pupil_Id +  " Employee Id: " + Employee_Id +
+                " Subject Id: " + Subject_Id + " Describe: " + Describe + " Mark date: "+Mark_Date.ToShortDateString();
+        }
+
         public virtual Employee Employee { get; set; }
         public virtual Subject Subject { get; set; }
         public virtual Pupil Pupil { get; set; }

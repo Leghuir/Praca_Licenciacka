@@ -31,7 +31,16 @@ namespace MojDziennikv4.Models
         public string School_Id_Card_Number { get; set; }
         public int Account_Id { get; set; }
         public string Class_Number { get; set; }
-    
+
+        public override string ToString()
+        {
+            return "Pupil Id: " + Pupil_Id + " First name: " +
+                First_Name + " Middle Name: " + Middle_Name +
+                " Surname: " + Surname + " Pesel nember: " + Pesel_Number + " Legal guardian Id: " + Legal_Guardian_Id +
+                " Birth date: "+ Birth_Date.ToShortDateString() + " School id card number: " + School_Id_Card_Number+
+                " Account Id: " + Account_Id + " Class number: "+ Class_Number;
+        }
+
         public virtual Account Account { get; set; }
         public virtual Legal_Guardian Legal_Guardian { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

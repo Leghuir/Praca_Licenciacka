@@ -23,7 +23,10 @@ namespace MojDziennikv4.Models
     
         public int Subject_Id { get; set; }
         public string Subject_Name { get; set; }
-    
+        public override string ToString()
+        {
+            return "Subject Id: " + Subject_Id + " Subject name: " + Subject_Name;
+        }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Lesson> Lesson { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

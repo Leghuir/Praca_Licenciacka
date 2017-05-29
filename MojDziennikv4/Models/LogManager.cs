@@ -38,7 +38,7 @@ namespace MojDziennikv4.Models
         }
         public static void createlog(String operation,String item)
         {
-            LogManager.SaveLog("create" + ',' + DateTime.Now.Ticks + ',' + PersonAccount.getInstance().accountId + ',' + item);
+            LogManager.SaveLog(operation + ',' + DateTime.Now.Ticks + ',' + PersonAccount.getInstance().accountId + ',' + item);
         }
         public static void createeditlog(String item)
         {

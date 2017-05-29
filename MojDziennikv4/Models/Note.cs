@@ -20,7 +20,14 @@ namespace MojDziennikv4.Models
         public System.DateTime Note_Date { get; set; }
         public bool Positve { get; set; }
         public string Describe { get; set; }
-    
+
+        public override string ToString()
+        {
+            return "Note Id: " + Note_Id + 
+                " Pupil Id: " + Pupil_Id + " Employee Id: " + Employee_Id +
+                " Note date: " + Note_Date + " Positve: " + Positve + " Describe: " + Describe;
+        }
+
         public virtual Employee Employee { get; set; }
         public virtual Pupil Pupil { get; set; }
     }
