@@ -21,6 +21,7 @@ namespace MojDziennikv4.Controllers
         // GET: Legal_Guardians
         public ActionResult Index([Form] QueryOptions<String> queryOptions)
         {
+            var start = (queryOptions.currnetPage - 1) * queryOptions.pageSize;
             ViewBag.QueryOptions = queryOptions;
             if (queryOptions.Searchitem != "" && queryOptions.Searchitem != null)
                 return View(db.Legal_Guardian.Where(a => a.Surname.IndexOf(queryOptions.Searchitem) != -1 ||
@@ -30,7 +31,8 @@ namespace MojDziennikv4.Controllers
                 a.Middle_Name.IndexOf(queryOptions.Searchitem) != -1 ||
                 a.Telefon_Number.IndexOf(queryOptions.Searchitem) != -1 
                 ).ToList()); //leter i could connect them
-            return View(db.Legal_Guardian.OrderBy(queryOptions.Sort).ToList());
+            return View(db.Legal_Guardian.Skip(start).Take(queryOptions.pageSize).OrderBy(queryOptions.Sort).ToList());
+            
         }
 
         // GET: Legal_Guardians/Details/5

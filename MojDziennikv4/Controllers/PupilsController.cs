@@ -21,6 +21,7 @@ namespace MojDziennikv4.Controllers
         // GET: Pupils
         public ActionResult Index([Form] QueryOptions<String> queryOptions)
         {
+            var start = (queryOptions.currnetPage - 1) * queryOptions.pageSize;
             ViewBag.QueryOptions = queryOptions;
             if (queryOptions.Searchitem != "" && queryOptions.Searchitem != null)
                 return View(db.Pupil.Where(a => a.Surname.IndexOf(queryOptions.Searchitem) != -1 ||
@@ -35,7 +36,8 @@ namespace MojDziennikv4.Controllers
 
 
                 ).ToList()); //leter i could connect them
-            return View(db.Pupil.OrderBy(queryOptions.Sort).ToList());
+            return View(db.Pupil.Skip(start).Take(queryOptions.pageSize).OrderBy(queryOptions.Sort).ToList());
+            
         }
 
         // GET: Pupils/Details/5

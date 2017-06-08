@@ -21,6 +21,7 @@ namespace MojDziennikv4.Controllers
         // GET: Notes
         public ActionResult Index([Form] QueryOptions<String> queryOptions)
         {
+            var start = (queryOptions.currnetPage - 1) * queryOptions.pageSize;
             ViewBag.QueryOptions = queryOptions;
             if (queryOptions.Searchitem != "" && queryOptions.Searchitem != null)
                 return View(db.Note.Where(a => a.Employee.Surname.IndexOf(queryOptions.Searchitem) != -1 ||
@@ -30,7 +31,8 @@ namespace MojDziennikv4.Controllers
                 a.Pupil.Surname.IndexOf(queryOptions.Searchitem) != -1
                 ).ToList()); //leter i could connect them
             var note = db.Note.Include(n => n.Employee).Include(n => n.Pupil);
-            return View(db.Note.OrderBy(queryOptions.Sort).ToList());
+            return View(db.Note.Skip(start).Take(queryOptions.pageSize).OrderBy(queryOptions.Sort).ToList());
+            
         }
 
         // GET: Notes/Details/5
@@ -71,8 +73,8 @@ namespace MojDziennikv4.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.Employee_Id = new SelectList(db.Employee, "Employee_ID", "First_Name", note.Employee_Id);
-            ViewBag.Pupil_Id = new SelectList(db.Pupil, "Pupil_Id", "First_Name", note.Pupil_Id);
+            ViewBag.Employee_Id = new SelectList(db.Employee, "Employee_ID", "Surname", note.Employee_Id);
+            ViewBag.Pupil_Id = new SelectList(db.Pupil, "Pupil_Id", "Surname", note.Pupil_Id);
             return View(note);
         }
 

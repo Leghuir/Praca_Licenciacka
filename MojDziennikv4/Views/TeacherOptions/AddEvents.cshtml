@@ -1,4 +1,6 @@
-﻿@model MojDziennikv4.Models.Event
+﻿@using MojDziennikv4.Models
+@model MojDziennikv4.Models.Event
+
 @{
     ViewBag.Title = "AddEvents";
     Layout = "~/Views/Shared/_TeacherLayout.cshtml";
@@ -19,7 +21,7 @@
             <h4>Wydarzenie</h4>
             <hr />
             <div class="form-group">
-                @Html.LabelFor(model => model.Start_Time, htmlAttributes: new { @class = "control-label col-md-2" })
+                <label class="control-label col-md-2" for="Start_Time">Data rozpoczęcia*</label>
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.Start_Time, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Start_Time, "", new { @class = "text-danger" })
@@ -27,7 +29,7 @@
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.Duration_In_Days, htmlAttributes: new { @class = "control-label col-md-2" })
+                <label class="control-label col-md-2" for="Duration_In_Days">Czas trwania</label>
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.Duration_In_Days, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Duration_In_Days, "", new { @class = "text-danger" })
@@ -35,7 +37,7 @@
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.Describe, htmlAttributes: new { @class = "control-label col-md-2" })
+                <label class="control-label col-md-2" for="Describe">Opis</label>
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.Describe, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Describe, "", new { @class = "text-danger" })
@@ -43,13 +45,15 @@
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.Account_Group, htmlAttributes: new { @class = "control-label col-md-2" })
+                <label class="control-label col-md-2" for="Account_Group">Grupa użytkowników**</label>
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.Account_Group, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Account_Group, "", new { @class = "text-danger" })
                 </div>
             </div>
-
+            <p>* data w formacie rok/miesiąc/dzień</p>
+            <p>** Grupe użytkowników podaje się w formacie "Grupy użytkowników do których ma być wysłana wiadomość oddzielona przecinkami : klasy do których ma być wysłana wiadomość oddzielona przecinkami " w przypadku wiadomości do wszystkich należy wpisać all:all</p>
+            <p> Grupy użytkowników w systemie @foreach (var group in Enum.GetValues(typeof(AccountType))) {<span>@group </span>}</p>
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
                     <input type="submit" value="Create" class="btn btn-default" />

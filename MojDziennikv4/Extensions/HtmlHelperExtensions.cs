@@ -11,6 +11,54 @@ namespace MojDziennikv4.Extensions
 {
     public static class HtmlHelperExtensions
     {
+        public static MvcHtmlString BuildNextPerviousLinks( this HtmlHelper htmlHelper,QueryOptions<String> queryoptions,String actionName)
+        {
+            var urlHelper = new UrlHelper(htmlHelper.ViewContext.RequestContext);
+            return new MvcHtmlString(String.Format(
+                "<nav>" +
+                "<ul class=\"pager\">" +
+                "<li class=\"left previous {0}\">{1}</</li>" +
+                "<li class=\"next {2}\"> {3} <li> " +
+                "</ul>" +
+                "</nav>",
+                IsPreviousDisabled(queryoptions),
+                BuildPerviousLink(urlHelper, queryoptions, actionName),
+                IsNextDisabled(queryoptions),
+                BuildnextLink(urlHelper, queryoptions, actionName)
+                ));
+        }
+        public static String IsPreviousDisabled(QueryOptions<String> queryOption)
+        {
+            return (queryOption.currnetPage ==1) ? "disabled": String.Empty;
+        }
+        public static String IsNextDisabled(QueryOptions<String> queryOption)
+        {
+            return (queryOption.currnetPage == queryOption.totalPage) ? "disabled" : String.Empty;
+        }
+        private static String BuildPerviousLink(UrlHelper urlHelper,QueryOptions<String> queryOptions,String actionName)
+        {
+            return String.Format("<a href=\"{0}\"><span aria-hidden=\"true\">&larr;</span>Poprzednia</a> ",
+                urlHelper.Action(actionName, new
+                {
+                    Sortorder = queryOptions.Sortorder,
+                    SortFiled = queryOptions.SortFiled,
+                    currnetPage = queryOptions.currnetPage - 1,
+                    pageSize= queryOptions.pageSize
+
+                }));
+        }
+        private static String BuildnextLink(UrlHelper urlHelper, QueryOptions<String> queryOptions, String actionName)
+        {
+            return String.Format("<a href=\"{0}\">Następna<span aria-hidden=\"true\">&rarr;</span></a> ",
+                urlHelper.Action(actionName, new
+                {
+                    Sortorder = queryOptions.Sortorder,
+                    SortFiled = queryOptions.SortFiled,
+                    currnetPage = queryOptions.currnetPage + 1,
+                    pageSize = queryOptions.pageSize
+
+                }));
+        }
         public static HtmlString HtmlConvertToJson(this HtmlHelper htmlHelper, object model)
         {
             var settings = new JsonSerializerSettings

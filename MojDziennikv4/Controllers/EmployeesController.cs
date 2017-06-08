@@ -21,6 +21,7 @@ namespace MojDziennikv4.Controllers
         // GET: Employees
         public ActionResult Index([Form] QueryOptions<String> queryOptions)
         {
+            var start = (queryOptions.currnetPage - 1) * queryOptions.pageSize;
             ViewBag.QueryOptions = queryOptions;
             if (queryOptions.Searchitem != "" && queryOptions.Searchitem != null)
                 return View(db.Employee.Where(a => a.Surname.IndexOf(queryOptions.Searchitem) != -1 ||
@@ -34,7 +35,8 @@ namespace MojDziennikv4.Controllers
                 a.Hire_Date.Value.ToString().IndexOf(queryOptions.Searchitem) !=-1
 
                 ).ToList()); //leter i could connect them
-            return View(db.Employee.OrderBy(queryOptions.Sort).ToList());
+            return View(db.Employee.Skip(start).Take(queryOptions.pageSize).OrderBy(queryOptions.Sort).ToList());
+            
         }
 
         // GET: Employees/Details/5

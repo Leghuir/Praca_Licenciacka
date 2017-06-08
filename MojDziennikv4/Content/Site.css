@@ -74,7 +74,7 @@ textarea {
     width: 250px;
     margin: auto;
     height: 200px;
-    background-image: url('http://www.webestools.com/ftp/ybouane/scripts_tutorials/javascript/calendar/bak-300-250.gif');
+    background-image: url("../../Content/Images/bak-300-250.jpg");
 }
 
     .cal_calendar th {

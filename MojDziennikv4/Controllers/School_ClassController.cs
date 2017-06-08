@@ -21,12 +21,14 @@ namespace MojDziennikv4.Controllers
         // GET: School_Class
         public ActionResult Index([Form] QueryOptions<String> queryOptions)
         {
+            var start = (queryOptions.currnetPage - 1) * queryOptions.pageSize;
             ViewBag.QueryOptions = queryOptions;
             if (queryOptions.Searchitem != "" && queryOptions.Searchitem != null)
                 return View(db.School_Class.Where(a => a.Class_Number.IndexOf(queryOptions.Searchitem) != -1 ||
                 a.Employee.Surname.IndexOf(queryOptions.Searchitem) != -1 ||
                 a.Profile.IndexOf(queryOptions.Searchitem) != -1).ToList()); //leter i could connect them
-            return View(db.School_Class.OrderBy(queryOptions.Sort).ToList());
+            return View(db.School_Class.Skip(start).Take(queryOptions.pageSize).OrderBy(queryOptions.Sort).ToList());
+            
         }
 
         // GET: School_Class/Details/5

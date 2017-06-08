@@ -21,6 +21,7 @@ namespace MojDziennikv4.Controllers
         // GET: Events
         public ActionResult Index([Form] QueryOptions<String> queryOptions)
         {
+            var start = (queryOptions.currnetPage - 1) * queryOptions.pageSize;
             ViewBag.QueryOptions = queryOptions;
             if (queryOptions.Searchitem != "" && queryOptions.Searchitem != null)
                 return View(db.Event.Where(a => a.Employee.Surname.IndexOf(queryOptions.Searchitem) != -1 ||
@@ -29,7 +30,8 @@ namespace MojDziennikv4.Controllers
                 a.Duration_In_Days.Value.ToString().IndexOf(queryOptions.Searchitem) != -1 ||
                 a.Start_Time.Value.ToString().IndexOf(queryOptions.Searchitem) != -1
                 ).ToList()); //leter i could connect them
-            return View(db.Event.OrderBy(queryOptions.Sort).ToList());
+            return View(db.Event.Skip(start).Take(queryOptions.pageSize).OrderBy(queryOptions.Sort).ToList());
+
         }
 
         // GET: Events/Details/5

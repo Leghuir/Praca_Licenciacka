@@ -1,4 +1,5 @@
-﻿@model MojDziennikv4.Models.Mark
+﻿@using MojDziennikv4.Models;
+@model MojDziennikv4.Models.Mark
 @{
     ViewBag.Title = "AddMarks";
     Layout = "~/Views/Shared/_TeacherLayout.cshtml";
@@ -7,82 +8,39 @@
 
 <h2>Create</h2>
 
+<h3>Wybierz klase</h3>
+<select id="myDropDown">
+    <option> </option>
+    @foreach (School_Class classes in ViewBag.Class_Name)
+    {
+        <option>@classes.Class_Number</option>
+    }
+</select>
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
+<form name="form1" action="/TeacherOptions/AddMarks" method="post">
+    <select name="Subject1" id="Subject1">
+        <option> </option>
+        @foreach (String subject in ViewBag.Subjects)
+        {
+            <option>@subject</option>
+        }
+    </select>
+</form>
+<div id="partialPlaceHolder" style="display:none; padding-top:50px;">@Html.Action("PartialAddMakrs", "TeacherOptions") </div>
 
-    <div class="form-horizontal">
-        <h4>Mark</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Value, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Value, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Value, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Weight, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Weight, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Weight, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Pupil_Id, "Pupil_Id", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("Pupil_Id", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Pupil_Id, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Employee_Id, "Employee_Id", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("Employee_Id", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Employee_Id, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Subject_Id, "Subject_Id", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("Subject_Id", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Subject_Id, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Describe, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Describe, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Describe, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Mark_Date, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Mark_Date, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Mark_Date, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
-}
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/Scripts/ClasschengerMarks.js");
 }
+<script type="text/javascript">
+    function submitForms()
+        {
+        document.getElementsByName("form1")[0].submit();
+        document.getElementsByName("form2")[0].submit();
+        }
+</script>
 
 
 

@@ -9,7 +9,7 @@ namespace MojDziennikv4.Models
 {
     public static class LogManager
     {
-        private static String path = @"D:\log.txt";
+        private static String path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory+@"log.txt");
         public static Log[] GetAllLogs()
         {
             List<Log> listOfLogs = new List<Log>();

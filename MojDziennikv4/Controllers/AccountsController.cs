@@ -23,31 +23,16 @@ namespace MojDziennikv4.Controllers
 
         public ActionResult Index([Form] QueryOptions<String> queryOptions)
         {
-            
-                ViewBag.QueryOptions = queryOptions;
+
+            var start = (queryOptions.currnetPage - 1) * queryOptions.pageSize;
+            ViewBag.QueryOptions = queryOptions;
                 if (queryOptions.Searchitem != "" && queryOptions.Searchitem != null)
                     return View(db.Account.Where(a => a.Login.IndexOf(queryOptions.Searchitem) != -1 ||
                      a.Account_Type.IndexOf(queryOptions.Searchitem) != -1 ||
                      a.Password.IndexOf(queryOptions.Searchitem) != -1
                     ).ToList()); //leter i could connect them
-                return View(db.Account.OrderBy(queryOptions.Sort).ToList());
+                return View(db.Account.OrderBy(queryOptions.Sort).Skip(start).Take(queryOptions.pageSize).ToList());
         }
-
-        // GET: Accounts/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Account account = db.Account.Find(id);
-            if (account == null)
-            {
-                return HttpNotFound();
-            }
-            return View(account);
-        }
-
         // GET: Accounts/Create
         public ActionResult Create()
         {
