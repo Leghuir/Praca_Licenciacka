@@ -1,8 +1,22 @@
-﻿@model MojDziennikv4.Models.Log[]
+﻿@using MojDziennikv4.Models
+@using MojDziennikv4.Extensions
+@model Log[]
 @{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Strona główna";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    QueryOptions<String> queryOptions = (QueryOptions<String>)ViewBag.QueryOptions;
 }
+<div class="container" style="width:inherit">
+    <div class="row mymargin">
+        <div class="col-lg-6">
+            <h2>Logi</h2>
+        </div>
+        <div class="col-lg-3"></div>
+        <div class="col-lg-3 text-right">
+            @Html.BuildSearchableLink("Searchitem", "Wpisz szukaną fraze", "Index", "Employee.Surname", queryOptions)
+        </div>
+    </div>
+</div>
 <table class="table table-bordered table-striped">
     <tr>
         <td>Nazwa operacja</td>
@@ -20,3 +34,6 @@
         </tr>
     }
 </table>
+<div>
+    <div>@Html.BuildNextPerviousLinks(queryOptions, "Index")</div>
+</div>

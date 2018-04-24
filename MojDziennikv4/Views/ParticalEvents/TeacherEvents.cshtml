@@ -15,11 +15,6 @@
             <td>@Model[i].Employee.Surname</td>
             <td>@Model[i].Start_Time.Value.Date.ToShortDateString()</td>
             <td>@Model[i].Describe</td>
-            @if (@i > 2)
-            {
-                @Html.ActionLink("Klknij aby zobaczyć więcej", "Index", "PupilOptions")
-                break;
-            }
         </tr>
     }
 </table>

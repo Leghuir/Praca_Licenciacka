@@ -1,11 +1,11 @@
 ﻿@model MojDziennikv4.Models.Note
 @{
-    ViewBag.Title = "AddNotes";
+    ViewBag.Title = "Stwórz uwage";
     Layout = "~/Views/Shared/_TeacherLayout.cshtml";
 }
 
 
-<h2>Create</h2>
+<h2>Stwórz</h2>
 
 
 @using (Html.BeginForm())
@@ -13,7 +13,7 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Note</h4>
+        <h4>Uwaga</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -52,7 +52,7 @@
         <p>* Data w formacie rok/miesiąc/dzień</p>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Stwórz" class="btn btn-default" />
             </div>
         </div>
     </div>

@@ -32,7 +32,13 @@ namespace MojDziennikv4.Controllers
         }
         public ActionResult Index(String message)
         {
+            try { 
             ViewBag.hlp = new LoginHelper(db.Account.ToList(), "", "", "Unknow");
+            }
+            catch(Exception e)
+            {
+                throw new Exception("Nie podłączono bazy danych");
+            }
             if (message=="logout")
             {
                 PersonAccount.getInstance().reset();

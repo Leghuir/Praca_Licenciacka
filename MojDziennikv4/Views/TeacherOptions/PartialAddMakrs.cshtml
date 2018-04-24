@@ -9,7 +9,6 @@
             <div class="col-md-offset-2 col-md-10">
                 <input 
                        onclick="submitForms()" value="Zatwierdź" class="btn btn-default" />
-                <a href="/TeacherOptions/AddMarks"><input type="button" value="Powrót do listy" class="btn btn-default" /></a>
             </div>
         </div>
     </div>
@@ -19,7 +18,6 @@
             <td>Ocena</td>
             <td>Waga oceny</td>
             <td>Opis</td>
-            <td>Przedmiot</td>
         </tr>
         @foreach (var pupil in Model)
         {
@@ -28,7 +26,6 @@
                 <td><input id="Value" class="form-control" name="Value" value="" type="text" /></td>
                 <td><input id="Weight" class="form-control" name="Weight" value="" type="text" /></td>
                 <td><input id="Description" class="form-control" name="Description" value="" type="text" /></td>
-                <td><input id="Subject" class="form-control" name="Subject" value="" type="text" /></td>
             </tr>
         }
     </table>

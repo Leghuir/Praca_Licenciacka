@@ -21,6 +21,9 @@ namespace MojDziennikv4.Controllers
         // GET: Employees
         public ActionResult Index([Form] QueryOptions<String> queryOptions)
         {
+            var temp1 = db.Employee.ToList();
+            double temp = temp1.Count / (double)queryOptions.pageSize;
+            queryOptions.totalPage = (int)Math.Ceiling(temp);
             var start = (queryOptions.currnetPage - 1) * queryOptions.pageSize;
             ViewBag.QueryOptions = queryOptions;
             if (queryOptions.Searchitem != "" && queryOptions.Searchitem != null)
@@ -35,7 +38,7 @@ namespace MojDziennikv4.Controllers
                 a.Hire_Date.Value.ToString().IndexOf(queryOptions.Searchitem) !=-1
 
                 ).ToList()); //leter i could connect them
-            return View(db.Employee.Skip(start).Take(queryOptions.pageSize).OrderBy(queryOptions.Sort).ToList());
+            return View(db.Employee.OrderBy(queryOptions.Sort).Skip(start).Take(queryOptions.pageSize).ToList());
             
         }
 

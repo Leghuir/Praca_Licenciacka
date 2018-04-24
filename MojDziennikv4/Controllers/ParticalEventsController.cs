@@ -19,20 +19,10 @@ namespace MojDziennikv4.Controllers
         // GET: ParticalEvents
         public ActionResult Index()
         {
+            Pupil pupile = PersonAccount.GetPupilFromAccountId();
             Thread.CurrentThread.CurrentCulture = new CultureInfo("pl-PL");
-            events.Clear();
-            Pupil pupil = PersonAccount.GetPupilFromAccountId();
-            foreach (var eve in db.Event.ToList())
-            {
-                ap.accountGroup = eve.Account_Group;
-                ap.init();
-
-                if (ap.exists(person.AuthenticationType, pupil.Class_Number))
-                {
-                    events.Add(eve);
-                }
-            }
-            return PartialView(events);
+            String type = PersonAccount.getInstance().AuthenticationType;
+            return PartialView(db.Event.ToList().Where(a => AccountGroupParserController.EventMatcher(a, type, pupile.Class_Number)).ToList());
         }
         public ActionResult TeacherEvents()
         {

@@ -58,7 +58,7 @@ namespace MojDziennikv4.Controllers
             {
                 foreach (var ty in types.Split(','))
                 {
-                    this.aviblesclasses.Add(ty);
+                    this.accountTypes.Add(ty);
                 }
             }
         }

@@ -9,9 +9,11 @@
 }
 
 <div class="container" style="width:inherit">
-    <div class="row">
+    <div class="row mymargin">
         <div class="col-lg-6">
-            <h2>Pracownicy</h2>
+            <h2 style="margin-top:0px; margin-bottom:19px;">Pracownicy</h2>
+            <a href="/Employees/Create"><input type="button" value="Stwórz pracownika" class="btn btn-default" /></a>
+
         </div>
         <div class="col-lg-3"></div>
         <div class="col-lg-3 text-right">
@@ -19,9 +21,6 @@
         </div>
     </div>
 </div>
-    <p>
-        <a href="/Employees/Create"><input type="button" value="Stwórz nowego pracownika" class="btn btn-default" /></a>
-    </p>
     <table class="table table-bordered table-striped">
         <tr>
             <th>
@@ -95,3 +94,4 @@
 <div>
     <div>@Html.BuildNextPerviousLinks(queryOptions, "Index")</div>
 </div>
+@Styles.Render("~/Content/css");

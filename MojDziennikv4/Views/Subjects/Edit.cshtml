@@ -1,11 +1,11 @@
 ﻿@model MojDziennikv4.Models.Subject
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Edytuj przedmiot";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>Edit</h2>
+<h2>Edycja</h2>
 
 
 @using (Html.BeginForm())
@@ -13,13 +13,13 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Subject</h4>
+        <h4>Przedmiot</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Subject_Id)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Subject_Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2" for="Subject_Name">Nazwa przedmiotu</label>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Subject_Name, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Subject_Name, "", new { @class = "text-danger" })
@@ -28,7 +28,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Zapisz" class="btn btn-default" />
                 <a href="/Subjects/Index"><input type="button" value="Powrót do listy" class="btn btn-default" /></a>
             </div>
         </div>

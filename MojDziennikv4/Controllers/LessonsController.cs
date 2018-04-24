@@ -21,6 +21,9 @@ namespace MojDziennikv4.Controllers
         // GET: Lessons
         public ActionResult Index([Form] QueryOptions<String> queryOptions)
         {
+            var temp1 = db.Lesson.ToList();
+            double temp = temp1.Count / (double)queryOptions.pageSize;
+            queryOptions.totalPage = (int)Math.Ceiling(temp);
             var start = (queryOptions.currnetPage - 1) * queryOptions.pageSize;
             ViewBag.QueryOptions = queryOptions;
             if (queryOptions.Searchitem != "" && queryOptions.Searchitem != null)
@@ -29,7 +32,7 @@ namespace MojDziennikv4.Controllers
                 a.Day_Of_Week.ToString().IndexOf(queryOptions.Searchitem) != -1 ||
                 a.Start_Time.ToString().IndexOf(queryOptions.Searchitem) != -1 ||
                 a.Subject.Subject_Name.IndexOf(queryOptions.Searchitem) != -1).ToList()); //leter i could connect them
-            return View(db.Lesson.Skip(start).Take(queryOptions.pageSize).OrderBy(queryOptions.Sort).ToList());
+            return View(db.Lesson.OrderBy(queryOptions.Sort).Skip(start).Take(queryOptions.pageSize).ToList());
             
         }
 

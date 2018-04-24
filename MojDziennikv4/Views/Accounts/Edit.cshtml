@@ -1,7 +1,9 @@
-﻿@model MojDziennikv4.Models.Account
+﻿@using MojDziennikv4.Models
+
+@model MojDziennikv4.Models.Account
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Edytuj konto";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
@@ -13,13 +15,13 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Account</h4>
+        <h4>Konto</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Account_Id)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Login, htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2" for="Login">Login</label>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Login, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Login, "", new { @class = "text-danger" })
@@ -27,7 +29,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2" for="Password">Hasło</label>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
@@ -35,9 +37,14 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Account_Type, htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2" for="Account_Type">Typ Konta</label>
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Account_Type, new { htmlAttributes = new { @class = "form-control" } })
+                <select id="Account_Type" name="Account_Type" class="form-control">
+                    @foreach (var option in Enum.GetValues(typeof(AccountType)))
+                    {
+                        <option value="@option.ToString()">@option</option>
+                    }
+                </select>
                 @Html.ValidationMessageFor(model => model.Account_Type, "", new { @class = "text-danger" })
             </div>
         </div>

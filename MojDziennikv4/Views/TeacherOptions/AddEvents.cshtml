@@ -2,7 +2,7 @@
 @model MojDziennikv4.Models.Event
 
 @{
-    ViewBag.Title = "AddEvents";
+    ViewBag.Title = "Stwórz wydarzenie";
     Layout = "~/Views/Shared/_TeacherLayout.cshtml";
 }
 <!DOCTYPE html>
@@ -10,7 +10,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Create</title>
+    <title>Stwórz</title>
 </head>
 <body>
     @using (Html.BeginForm())
@@ -56,7 +56,7 @@
             <p> Grupy użytkowników w systemie @foreach (var group in Enum.GetValues(typeof(AccountType))) {<span>@group </span>}</p>
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Create" class="btn btn-default" />
+                    <input type="submit" value="Stwórz" class="btn btn-default" />
                 </div>
             </div>
         </div>

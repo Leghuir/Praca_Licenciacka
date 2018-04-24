@@ -96,8 +96,7 @@ namespace MojDziennikv4.Extensions
             string actionName, string searchFiled, QueryOptions<String> queryOptions)
         {
             var UrlHelper = new UrlHelper(htmlHelper.ViewContext.RequestContext);
-            var isCurrentSortFiled = queryOptions.SortFiled == searchFiled; //niepotrzebne
-            return new MvcHtmlString(string.Format("<form action=\"{0}\"> <input type=\"text\" name=\"{2}\" placeholder=\"{1}\" class=\"form-control\"><br><input type=\"submit\" value=\"Szukaj\" class=\"btn btn - default\" ></form>",
+            return new MvcHtmlString(string.Format("<form action=\"{0}\"> <input type=\"text\" name=\"{2}\" placeholder=\"{1}\" class=\"form-control\" value=\" \"><br><input type=\"submit\" value=\"Szukaj\" class=\"btn btn - default\" ></form>",
                 UrlHelper.Action(actionName, new
                 {
                     SearchFiled = searchFiled

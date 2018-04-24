@@ -23,15 +23,26 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    
+
                     <li>
-                        @Html.ActionLink("Dodaj ocene", "AddMarks", "TeacherOptions")</li>
+                        @Html.ActionLink("Dodaj ocene", "AddMarks", "TeacherOptions")
+                    </li>
                     <li>
-                        @Html.ActionLink("Dodaj uwage", "AddNotes", "TeacherOptions")</li>
+                        @Html.ActionLink("Dodaj uwage", "AddNotes", "TeacherOptions")
+                    </li>
                     <li>
-                        @Html.ActionLink("Dodaj wydarzenie", "AddEvents", "TeacherOptions")</li>
-                    <li> @Html.ActionLink("Dane Uczniów", "AboutPupils", "TeacherOptions")</li>
-</ul>
+                        @Html.ActionLink("Dodaj wydarzenie", "AddEvents", "TeacherOptions")
+                    </li>
+                    <li>
+                        <div class="dropdown">
+                            <a class="dropbtn">Dane uczniów</a>
+                            <div class="dropdown-content">
+                                @Html.ActionLink("Dane personalne", "AboutPupils", "TeacherOptions")
+                                @Html.ActionLink("Oceny uczniów", "PupilMarks", "TeacherOptions")
+                            </div>
+                        </div>
+                    </li>
+                </ul>
                 @Html.Action("LoginName", "Home")
             </div>
         </div>

@@ -1,15 +1,15 @@
 ﻿@model MojDziennikv4.Models.Account
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Usuń";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>Delete</h2>
+<h2>Usuń</h2>
 
 <h3>Na pewno chcesz usunąć dany rekord?</h3>
 <div>
-    <h4>Account</h4>
+    <h4>Konto</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -21,7 +21,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Password)
+            Hasło
         </dt>
 
         <dd>
@@ -29,7 +29,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Account_Type)
+            Typ konta
         </dt>
 
         <dd>
@@ -42,7 +42,7 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
+            <input type="submit" value="Usuń" class="btn btn-default" /> |
             <a href="/Accounts/Index"><input type="button" value="Powrót do listy" class="btn btn-default" /></a>
         </div>
     }

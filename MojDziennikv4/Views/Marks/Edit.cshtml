@@ -1,11 +1,11 @@
 ﻿@model MojDziennikv4.Models.Mark
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Edytuj ocene";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>Edit</h2>
+<h2>Edycja</h2>
 
 
 @using (Html.BeginForm())
@@ -13,13 +13,12 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Mark</h4>
+        <h4>Ocena</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Mark_Id)
-
         <div class="form-group">
-            @Html.LabelFor(model => model.Value, htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2" for="Value">wartość</label>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Value, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Value, "", new { @class = "text-danger" })
@@ -27,7 +26,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Weight, htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2" for="Weight">Waga</label>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Weight, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Weight, "", new { @class = "text-danger" })
@@ -35,7 +34,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Pupil_Id, "Pupil_Id", htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2" for="Pupil_Id">Numer Ucznia</label>
             <div class="col-md-10">
                 @Html.DropDownList("Pupil_Id", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Pupil_Id, "", new { @class = "text-danger" })
@@ -43,7 +42,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Employee_Id, "Employee_Id", htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2" for="Employee_Id">Numer nauczyciela</label>
             <div class="col-md-10">
                 @Html.DropDownList("Employee_Id", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Employee_Id, "", new { @class = "text-danger" })
@@ -51,7 +50,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Subject_Id, "Subject_Id", htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2" for="Subject_Id">Numer przedmiotu</label>
             <div class="col-md-10">
                 @Html.DropDownList("Subject_Id", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Subject_Id, "", new { @class = "text-danger" })
@@ -59,7 +58,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Describe, htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2" for="Describe">Opis</label>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Describe, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Describe, "", new { @class = "text-danger" })
@@ -67,7 +66,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Mark_Date, htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2" for="Mark_Date">Data nadania</label>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Mark_Date, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Mark_Date, "", new { @class = "text-danger" })
@@ -76,16 +75,12 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Zapisz" class="btn btn-default" />
                 <a href="/Marks/Index"><input type="button" value="Powrót do listy" class="btn btn-default" /></a>
             </div>
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

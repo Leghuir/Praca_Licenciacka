@@ -21,6 +21,9 @@ namespace MojDziennikv4.Controllers
         // GET: Class_Rooms
         public ActionResult Index([Form] QueryOptions<String> queryOptions)
         {
+            var temp1 = db.Class_Room.ToList();
+            double temp = temp1.Count / (double)queryOptions.pageSize;
+            queryOptions.totalPage = (int)Math.Ceiling(temp);
             var start = (queryOptions.currnetPage - 1) * queryOptions.pageSize;
 
             ViewBag.QueryOptions = queryOptions;
@@ -30,7 +33,7 @@ namespace MojDziennikv4.Controllers
                 a.Equipment_Description.IndexOf(queryOptions.Searchitem) != -1 ||
                 a.Size.Value.ToString().IndexOf(queryOptions.Searchitem) != -1
                 ).ToList())); //leter i could connect them
-            return View(db.Class_Room.Skip(start).Take(queryOptions.pageSize).OrderBy(queryOptions.Sort).ToList());
+            return View(db.Class_Room.OrderBy(queryOptions.Sort).Skip(start).Take(queryOptions.pageSize).ToList());
         }
 
         // GET: Class_Rooms/Details/5

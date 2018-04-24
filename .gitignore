@@ -1,0 +1,17 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/MojDziennikv5/v15/Server/sqlite3
+
+\.vs/MojDziennikv5/v14/\.suo
+
+\.vs/MojDziennikv5/v15/\.suo
+
+MojDziennikv4/bin/
+
+*.CopyComplete
+
+*.cache
+
+MojDziennikv4/obj/Debug/

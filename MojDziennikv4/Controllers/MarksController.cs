@@ -21,6 +21,10 @@ namespace MojDziennikv4.Controllers
         // GET: Marks
         public ActionResult Index([Form] QueryOptions<String> queryOptions)
         {
+            var temp1 = db.Mark.ToList();
+            double temp = temp1.Count / (double)queryOptions.pageSize;
+            queryOptions.totalPage = (int)Math.Ceiling(temp);
+
             var start = (queryOptions.currnetPage - 1) * queryOptions.pageSize;
             ViewBag.QueryOptions = queryOptions;
             if (queryOptions.Searchitem != "" && queryOptions.Searchitem != null)
@@ -32,7 +36,7 @@ namespace MojDziennikv4.Controllers
                 a.Value.ToString().IndexOf(queryOptions.Searchitem) != -1 ||
                 a.Weight.Value.ToString().IndexOf(queryOptions.Searchitem) != -1 
                 ).ToList()); //leter i could connect them
-            return View(db.Mark.Skip(start).Take(queryOptions.pageSize).OrderBy(queryOptions.Sort).ToList());
+            return View(db.Mark.OrderBy(queryOptions.Sort).Skip(start).Take(queryOptions.pageSize).ToList());
             
         }
 

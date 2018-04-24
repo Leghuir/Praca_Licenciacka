@@ -1,11 +1,11 @@
 ﻿@model MojDziennikv4.Models.Class_Room
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Edycja sali";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>Edit</h2>
+<h2>Edytuj</h2>
 
 
 @using (Html.BeginForm())
@@ -13,13 +13,13 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Class_Room</h4>
+        <h4>Sala</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Class_Room_Number)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Employee_Id, "Employee_Id", htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2" for="Employee_Id">Numer Pracownika</label>
             <div class="col-md-10">
                 @Html.DropDownList("Employee_Id", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Employee_Id, "", new { @class = "text-danger" })
@@ -27,7 +27,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Size, htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2" for="Size">Rozmiar sali</label>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Size, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Size, "", new { @class = "text-danger" })
@@ -35,7 +35,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Subject_Id, htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2" for="Subject_Id">Numer Przedmiotu</label>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Subject_Id, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Subject_Id, "", new { @class = "text-danger" })
@@ -43,7 +43,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Equipment_Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2" for="Equipment_Description">Opis wyposażenia</label>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Equipment_Description, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Equipment_Description, "", new { @class = "text-danger" })
@@ -52,7 +52,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Zapisz" class="btn btn-default" />
                 <a href="/Class_Rooms/Index"><input type="button" value="Powrót do listy" class="btn btn-default" /></a>
             </div>
         </div>

@@ -23,6 +23,9 @@ namespace MojDziennikv4.Controllers
 
         public ActionResult Index([Form] QueryOptions<String> queryOptions)
         {
+            var temp1 = db.Account.ToList();
+            double temp = temp1.Count / (double)queryOptions.pageSize;
+            queryOptions.totalPage = (int)Math.Ceiling(temp);
 
             var start = (queryOptions.currnetPage - 1) * queryOptions.pageSize;
             ViewBag.QueryOptions = queryOptions;
@@ -114,9 +117,13 @@ namespace MojDziennikv4.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Account account = db.Account.Find(id);
-            LogManager.createlog("delete",account.ToString());
-            LogManager.SaveLog("delete" + ',' + DateTime.Now.Ticks + ',' + PersonAccount.getInstance().accountId + ',' + account.ToString());
+            Account account;
+            using (var mydb = new MojDziennikEntities())
+            {
+                account = mydb.Account.Find(id);
+                LogManager.createlog("delete", account.ToString());
+            }
+            account = db.Account.Find(id);
             db.Account.Remove(account);
             db.SaveChanges();
             return RedirectToAction("Index");

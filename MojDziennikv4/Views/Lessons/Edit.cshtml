@@ -1,11 +1,11 @@
 ﻿@model MojDziennikv4.Models.Lesson
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Edytuj lekcje";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>Edit</h2>
+<h2>Edycja</h2>
 
 
 @using (Html.BeginForm())
@@ -13,13 +13,13 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Lesson</h4>
+        <h4>Lekcja</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Lesson_Id)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Class_Number, "Class_Number", htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2" for="Class_Number">Klasa</label>
             <div class="col-md-10">
                 @Html.DropDownList("Class_Number", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Class_Number, "", new { @class = "text-danger" })
@@ -27,7 +27,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Subject_Id, "Subject_Id", htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2" for="Subject_Id">Numer przedmiotu</label>
             <div class="col-md-10">
                 @Html.DropDownList("Subject_Id", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Subject_Id, "", new { @class = "text-danger" })
@@ -35,7 +35,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Employee_Id, "Employee_Id", htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2" for="Employee_Id">Numer nauczyciela</label>
             <div class="col-md-10">
                 @Html.DropDownList("Employee_Id", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Employee_Id, "", new { @class = "text-danger" })
@@ -43,7 +43,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Day_Of_Week, htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2" for="Day_Of_Week">Dzień tygodnia</label>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Day_Of_Week, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Day_Of_Week, "", new { @class = "text-danger" })
@@ -51,7 +51,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Start_Time, htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2" for="Start_Time">Czas rozpoczęcia</label>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Start_Time, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Start_Time, "", new { @class = "text-danger" })
@@ -59,7 +59,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Class_Room_Number, "Class_Room_Number", htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2" for="Class_Room_Number">Numer Sali</label>
             <div class="col-md-10">
                 @Html.DropDownList("Class_Room_Number", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Class_Room_Number, "", new { @class = "text-danger" })
@@ -68,7 +68,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Zapisz" class="btn btn-default" />
                 <a href="/Lessons/Index"><input type="button" value="Powrót do listy" class="btn btn-default" /></a>
             </div>
         </div>

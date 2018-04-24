@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.ModelBinding;
 using System.Web.Mvc;
 
 namespace MojDziennikv4.Controllers
@@ -13,13 +14,28 @@ namespace MojDziennikv4.Controllers
     [BasicAuthentication]
     public class HomeController : Controller
     {
-
+        private static String search;
         [AdminAuthorization]
-        public ActionResult Index()
+        public ActionResult Index([Form] QueryOptions<String> queryOptions)
         {
+            double temp = LogManager.GetLogs(0, 999).Length / (double)queryOptions.pageSize;
+            queryOptions.totalPage = (int)Math.Ceiling(temp);
+
+            var start = (queryOptions.currnetPage - 1) * queryOptions.pageSize;
+            ViewBag.QueryOptions = queryOptions;
             ViewBag.userName = "Administrator";
             ViewBag.hlp = null;
-            return View(LogManager.GetAllLogs());
+            if (queryOptions.Searchitem == " ")
+                search = null;
+            else
+                if(queryOptions.Searchitem != null)
+                search = queryOptions.Searchitem;
+            if (search!= null)
+            {
+               
+                return View(LogManager.GetLogs(start, queryOptions.pageSize, search.Trim()));
+            }
+            return View(LogManager.GetLogs(start, queryOptions.pageSize));
         }
         [PupilAuthorization]
         public ActionResult AsPupil()
